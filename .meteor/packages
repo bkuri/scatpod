@@ -20,3 +20,11 @@ anti:i18n
 http
 robodo:masonrify
 materialize:materialize
+aldeed:collection2
+aldeed:autoform
+gildaspk:autoform-materialize
+useraccounts:materialize
+accounts-password
+dburles:collection-helpers
+matb33:collection-hooks
+zimme:iron-router-active
