@@ -13,7 +13,6 @@ iron:router
 isotope:isotope
 yasinuslu:lodash
 chrismbeckett:toastr
-muicss:mui
 msavin:mongol
 fortawesome:fontawesome
 aldeed:simple-schema

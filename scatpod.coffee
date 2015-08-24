@@ -2,38 +2,3 @@
 # Discover = new Mongo.Collection 'Discover'
 # Settings = new Mongo.Collection 'Settings'
 # Tracking = new Mongo.Collection 'Tracking'
-
-Router.route '/', -> @render 'home'
-Router.route '/search', -> @render 'search'
-Router.route '/settings', -> @render 'Settings'
-Router.route '/tracking', -> @render 'TrackingList'
-Router.route '/tracking/:id', -> @render 'PodcastDetails', data: -> (Tracking.findOne id: @params.id)
-
-if Meteor.isClient
-  # counter starts at 0
-  Session.setDefault 'counter', 0
-
-  Template.home.helpers
-    counter: ->
-      Session.get 'counter'
-
-  Template.home.events
-    'click button': (event, template) ->
-      # increment the counter when button is clicked
-      Session.set 'counter', (Session.get 'counter') + 1
-
-  Template.search.helpers
-    results: -> Session.get 'results'
-
-  Template.search.events
-    'click button': (event, template) ->
-      Meteor.call 'searchPodcasts', (template.find '#searchQuery').value, (error, response) ->
-        unless error?
-          Session.set 'results', response
-          return response
-        else (Session.set 'results', {error})
-
-
-if Meteor.isServer
-  Meteor.startup ->
-    # do server stuff
