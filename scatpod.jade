@@ -1,0 +1,53 @@
+template(name='home')
+  .mui-panel
+    .mui-text-display2 Welcome!
+    button.mui-btn.mui-btn-lg.mui-btn-primary.mui-btn-raised Click Me
+    p You've pressed the button #{counter} times.
+
+template(name='search')
+  .mui-panel.search
+    .mui-row
+      .mui-col-xs-10
+        input#searchQuery.mui-form-control.mui-empty(
+          name='searchQuery'
+          placeholder='Search for a particular podcast'
+          type='text'
+        )
+    
+      .mui-col-xs-2
+        button.mui-btn.mui-btn-floating(type='button'): i.fa.fa-search
+    
+    +with results
+      if error
+        p There was an error: #{error.errorType} #{error.message}!
+      
+      else
+        +masonryContainer(columnWidth=100 gutter=10 transitionDuration='0.1s' id='grid')
+          each results
+            +masonryElement('grid')
+              a(href='#')
+                .image
+                  img(
+                    alt='#{title} (#{subscribers} subscribers)'
+                    src=logo_url
+                    title='#{title} (#{subscribers} subscribers)'
+                  )
+                
+                p.mui-text-subhead #{title}
+
+head
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  
+  title scatpod
+
+body
+  nav.mui-appbar
+    .mui-container.mui-appbar-height
+      .flexbox
+        .item Home
+        .item Discover
+        .item item3
+  
+  .mui-container
