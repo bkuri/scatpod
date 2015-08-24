@@ -1,3 +1,8 @@
+Router.configure
+  layoutTemplate: 'layout'
+  loadingTemplate: 'loading'
+  notFoundTemplate: 'notfound'
+
 Router.route '/', -> @render 'home'
 Router.route '/search', -> @render 'search'
 Router.route '/settings', -> @render 'Settings'
