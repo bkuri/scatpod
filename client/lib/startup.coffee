@@ -1,5 +1,6 @@
 Meteor.startup ->
-  # attempt to set default language based on browser settings
-  # @see http://justmeteor.com/blog/add-i18n-to-your-application/
-  lang = window.navigator.userLanguage or window.navigator.language
-  i18n.setDefaultLanguage if lang.match /es/ then 'es' else 'en'
+  lang = (TAPi18n.setLanguage window.navigator.userLanguage or window.navigator.language or 'en')
+  
+  Session.set 'loading', true
+  lang.done -> Session.set 'loading', false
+  lang.fail (error) -> console.log error

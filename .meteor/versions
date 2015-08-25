@@ -4,7 +4,6 @@ aldeed:autoform@5.4.1
 aldeed:collection2@2.3.3
 aldeed:simple-schema@1.3.3
 aldeed:template-extension@3.4.3
-anti:i18n@0.4.3
 autoupdate@1.2.1
 babrahams:editable-json@0.4.3
 base64@1.0.3
@@ -12,9 +11,10 @@ binary-heap@1.0.3
 blaze@2.1.2
 blaze-tools@1.0.3
 boilerplate-generator@1.0.3
+brentjanderson:buzz@1.1.9
 callback-hook@1.0.3
+cfs:http-methods@0.0.29
 check@1.0.5
-chrismbeckett:toastr@2.1.2_1
 coffeescript@1.0.6
 dburles:collection-helpers@1.0.3
 dburles:mongo-collection-instances@0.3.4
@@ -40,7 +40,6 @@ iron:location@1.0.9
 iron:middleware-stack@1.0.9
 iron:router@1.0.9
 iron:url@1.0.9
-isotope:isotope@2.1.0_1
 jquery@1.11.3_2
 json@1.0.3
 lai:collection-extensions@0.1.4
@@ -60,6 +59,7 @@ momentjs:moment@2.10.6
 mongo@1.1.0
 mquandalle:jade@0.4.3
 mquandalle:jade-compiler@0.4.3
+mquandalle:moment@1.0.0
 mquandalle:stylus@1.1.1
 msavin:mongol@1.1.5
 npm-bcrypt@0.7.8_2
@@ -80,6 +80,7 @@ softwarerero:accounts-t9n@1.0.9
 spacebars@1.0.6
 spacebars-compiler@1.0.6
 srp@1.0.3
+tap:i18n@1.3.2
 templating@1.1.1
 tracker@1.0.7
 ui@1.0.6
@@ -89,6 +90,4 @@ useraccounts:core@1.12.3
 useraccounts:materialize@1.12.3
 webapp@1.2.0
 webapp-hashing@1.0.3
-yasinuslu:lodash@3.2.0
-zimme:active-route@2.0.4_1
-zimme:iron-router-active@2.0.1
+zimme:active-route@2.3.1

@@ -1,0 +1,8 @@
+template(name='modal')
+  .modal.modal-fixed-footer
+    .modal-content
+      +yield
+    
+    .modal-footer
+      +yield(region='buttons')
+      a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href='#!') OK

@@ -10,13 +10,9 @@ mquandalle:jade
 coffeescript
 mquandalle:stylus
 iron:router
-isotope:isotope
-yasinuslu:lodash
-chrismbeckett:toastr
 msavin:mongol
 fortawesome:fontawesome
 aldeed:simple-schema
-anti:i18n
 http
 robodo:masonrify
 materialize:materialize
@@ -27,4 +23,6 @@ useraccounts:materialize
 accounts-password
 dburles:collection-helpers
 matb33:collection-hooks
-zimme:iron-router-active
+zimme:active-route
+brentjanderson:buzz
+mquandalle:moment
