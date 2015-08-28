@@ -1,0 +1,49 @@
+.masonry-container
+  margin 0 25px
+
+$element-width = 225px
+
+.masonry-element
+  min-width $element-width
+
+  img
+    height auto
+
+    &.thumb
+      background-color black
+      border 2px solid black
+      border-radius 4px
+      float left
+      margin 5px 5px 0 0
+      width 70px
+
+  p
+    line-height 15px
+    pointer-events none
+    text-align justify
+
+  span.tools
+    display block
+    float right
+    line-height 1rem
+    margin-right -5px
+    margin-top 3px
+
+  .card > *
+    max-width $element-width
+
+  .card-content
+    cursor pointer
+
+    & > .card-title
+      display block
+      pointer-events none
+
+  .card-reveal
+    cursor pointer
+
+  .card-title
+    line-height 1.5rem !important
+
+  .divider
+    margin 10px 0

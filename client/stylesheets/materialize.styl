@@ -1,6 +1,6 @@
 // Materialize stylesheet override
 
-
+/*
 footer.page-footer
   margin 0
   padding 0
@@ -15,7 +15,31 @@ footer.page-footer
 
   .row
     margin 0
+*/
 
+#modal-add
+  .collection
+    border none
+    margin 0
+
+    &.with-header .collection-header
+      padding 10px 0 0 0
+
+    .collection-item
+      padding 10px 0 0 72px
+
+      &.avatar
+        min-height 65px
+
+        p
+          line-height 1rem
+          margin-bottom 10px
+
+      h5
+        margin 0
+
+  .modal-content
+    padding 12px
 
 nav ul a,
 nav .brand-logo

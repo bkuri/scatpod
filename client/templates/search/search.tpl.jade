@@ -1,0 +1,36 @@
+.container-fluid.row
+  .col.l9.m11.s12.offset-l1.input-field
+    form
+      i.mdi-action-search.prefix
+      input#query.validate(
+        autofocus
+        name='query'
+        placeholder='Podcast name, category, network, etc.'
+        type='text'
+      )
+    
++with results
+  if error
+    p There was an error: #{error.errorType} #{error.message}!
+  
+  else
+    .container-fluid.row
+      .col.l10.m12.s12.offset-l1
+        +masonryContainer(columnWidth=110 gutter=10 id='grid' transitionDuration='0.1s')
+          each results
+            +masonryElement('grid')
+              .card.small.hoverable
+                div($dyn=imbg)
+                  img.activator(
+                    src=logo_url
+                    title='#{title} (#{subscribers} subscribers)'
+                  )
+
+                .card-content.activator
+                  +pod_tools
+
+                .card-reveal
+                  +pod_tools
+                  .divider
+                  img.thumb(src=logo_url)
+                  p #{description}
