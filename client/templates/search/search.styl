@@ -14,23 +14,37 @@ $element-width = 225px
       border 2px solid black
       border-radius 4px
       float left
-      margin 5px 5px 0 0
+      margin -5px 5px 0 0
       width 70px
 
-  p
-    line-height 15px
+  p.description
+    display none
+    line-height 13px
     pointer-events none
-    text-align justify
+    // text-align justify
 
   span.tools
     display block
     float right
     line-height 1rem
-    margin-right -5px
-    margin-top 3px
+    margin-top -5px
 
-  .card > *
-    max-width $element-width
+    a.disabled
+      cursor not-allowed
+      opacity 0.25
+      pointer-events none
+
+  .card
+    & > *
+      max-width $element-width
+
+    &.small
+      .explicit
+        border-color #f44236 transparent transparent transparent
+        border-style solid
+        border-width 34px 34px 0 0
+        height 0
+        width 0
 
   .card-content
     cursor pointer
@@ -42,8 +56,11 @@ $element-width = 225px
   .card-reveal
     cursor pointer
 
+    .preloader-wrapper
+      top 40%
+
   .card-title
     line-height 1.5rem !important
 
-  .divider
-    margin 10px 0
+  .ribbon:not(.hide) + .card-image
+    margin-top -43px
