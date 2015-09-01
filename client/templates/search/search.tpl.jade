@@ -8,8 +8,8 @@
         placeholder='Podcast name, category, network, etc.'
         type='text'
       )
-    
-+with results
+
+with results
   if error
     p There was an error: #{error.errorType} #{error.message}!
   
@@ -19,18 +19,42 @@
         +masonryContainer(columnWidth=110 gutter=10 id='grid' transitionDuration='0.1s')
           each results
             +masonryElement('grid')
-              .card.small.hoverable
-                div($dyn=imbg)
-                  img.activator(
-                    src=logo_url
-                    title='#{title} (#{subscribers} subscribers)'
+              .card.small.hoverable(data-feed='#{feedUrl}')
+                
+                if isExplicit collectionExplicitness
+                  .ribbon EXPLICIT
+                
+                a($dyn=imbg)  
+                  img(
+                    src=artworkUrl600
+                    title='#{collectionName}'
                   )
 
                 .card-content.activator
-                  +pod_tools
+                  span.card-title.grey-text.text-darken-4 #{collectionName}
 
                 .card-reveal
-                  +pod_tools
-                  .divider
-                  img.thumb(src=logo_url)
-                  p #{description}
+                  span.card-title
+
+                  span.tools
+                    a.disabled.tooltipped.black-text.list(
+                      data-position='left'
+                      data-tooltip='Show latest episodes'
+                      href='#'
+                    ): i.small.mdi-action-list
+
+                    a.disabled.tooltipped.black-text.play(
+                      data-position='left'
+                      data-tooltip='Listen to a random show'
+                      href='#'
+                    ): i.small.mdi-av-play-arrow
+
+                    a.disabled.tooltipped.black-text.join(
+                      data-position='left'
+                      data-tooltip='Subscribe to podcast'
+                      href='#'
+                    ): i.small.mdi-content-add
+
+                  img.thumb(src=artworkUrl60)
+                  p.description
+                  +spinner
