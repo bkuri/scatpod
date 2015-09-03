@@ -13,8 +13,14 @@ getFeed = (url, callback) ->
 
   try
     HTTP.get url, (error, data) ->
-      if error? then (callback meteorError, null)
-      else callback null, (xml2js.parseStringSync data.content, explicitArray: false).rss.channel
+      unless error?
+        xml = xml2js.parseStringSync data.content,
+          explicitArray: false
+          tagNameProcessors: [xml2js.processors.stripPrefix]
+
+        callback null, xml.rss.channel
+
+      else (callback meteorError, null)
 
   catch error
     callback meteorError, null

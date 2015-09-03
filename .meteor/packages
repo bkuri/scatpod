@@ -24,8 +24,11 @@ accounts-password
 dburles:collection-helpers
 matb33:collection-hooks
 zimme:active-route
-brentjanderson:buzz
 mquandalle:moment
 
 
 peerlibrary:xml2js
+brentjanderson:buzz
+dburles:mongo-collection-instances
+ongoworks:security
+alanning:roles

@@ -1,14 +1,13 @@
 Template.search.events
-  'click span.tools > a': (event, template) ->
+  'click span.tools > a': (event) ->
     $a = $(event.target).parent()
 
     event.preventDefault()
     event.stopPropagation()
 
     if ($a.hasClass 'list')
-      # TODO display playlist modal
-      list = ($a.data 'list')
-      console.log 'list', list
+      Session.set 'podcast', $a.data()
+      $('#episodes').openModal()
 
     else if ($a.hasClass 'play')
       item = ($a.data 'play')
@@ -17,8 +16,8 @@ Template.search.events
 
       sound.stop() for sound in buzz.sounds
 
-      if 'itunes:duration' in (Object.keys item)
-        timer = (buzz.fromTimer item['itunes:duration'])
+      if 'duration' in (Object.keys item)
+        timer = (buzz.fromTimer item.duration)
         timeout = switch
           when timer > 0 then (timer * 1000) - (90 * 1000)
           else (90 * 1000)
@@ -29,15 +28,14 @@ Template.search.events
         timeout = (90 * 1000)
         s.fadeIn()
 
-      date = moment(item.pubDate).format 'MMMM Do YYYY, h:mm:ss a'
-      Materialize.toast "#{item.title} (#{date})", timeout, 'rounded', -> s.fadeOut 500, -> s.stop()
+      date = moment(item.pubDate).format 'MMM Do YYYY'
+      Materialize.toast "#{item.title} (#{date})", timeout, '', -> s.fadeOut 500, -> s.stop()
 
     else
       console.log 'join'
 
 
-
-  'click .activator': (event, template) ->
+  'click .activator': (event) ->
     $card = $(event.target).parents '.card'
     $spinner = $card.find('.preloader-wrapper').addClass 'active'
     feed = ($card.data 'feed')
@@ -50,7 +48,7 @@ Template.search.events
 
         console.log response
 
-        $('span.tools > a.list', $card).removeClass('disabled').data list: (_.head response.item, 10)
+        $('span.tools > a.list', $card).removeClass('disabled').data list: (_.head response.item, 10), name: response.title
         $('span.tools > a.play', $card).removeClass('disabled').data play: response.item[_.random response.item.length]
         # $('span.tools > a.join', $card).removeClass('disabled').data join: response
 
@@ -63,7 +61,11 @@ Template.search.events
         console.log error
 
 
-  'click .card-reveal': (event, template) ->
+  'click .card-image': (event) ->
+    $(event.target).parents('.card').find('.activator').click()
+
+
+  'click .card-reveal': (event) ->
     $(event.target).find('.card-title').click()
 
 

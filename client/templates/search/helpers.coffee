@@ -12,12 +12,10 @@ Template.search.helpers
     ]
 
     class: [
-      'activator card-image waves-block waves-effect waves-light'
+      'card-image waves-block waves-effect waves-light'
       colors[_.random 0, (_.size colors) - 1]
       shades[_.random 0, (_.size shades) - 1]
     ].join ' '
-
-    href: '#'
 
   isExplicit: (value) ->
     value is 'explicit'
