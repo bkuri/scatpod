@@ -1,8 +1,11 @@
 Template.layout.rendered = ->
-  $('.button-collapse').sideNav()
-  $('.modal-trigger').leanModal()
-  $('.parallax').parallax()
-  $('.tooltipped').tooltip delay: 50
+  @autorun _.bind ->
+    Deps.afterFlush ->
+      $('.button-collapse').sideNav()
+      $('.dropdown-button').dropdown belowOrigin:true, hover: true
+      $('.modal-trigger').leanModal()
+      $('.parallax').parallax()
 
-  # FIXME should work but doesn't...
-  $(':input:visible[autofocus]').first().focus()
+      # FIXME should work but doesn't...
+      $(':input:visible[autofocus]').first().focus()
+  , this

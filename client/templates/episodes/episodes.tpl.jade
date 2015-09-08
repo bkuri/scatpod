@@ -1,17 +1,17 @@
 #episodes.modal.bottom-sheet
   .modal-content
     h4 #{name}
-    ul.collection
+    ul.collection(data-tracking='#{tracking}')
       each list
         li.collection-item.avatar.dismissable
           a.queue(
-            data-feed='{{enclosure.$.url}}'
             data-title='{{title}}'
-            data-guid='{{getGUID guid}}'
+            data-url='{{enclosure.$.url}}'
             href='#'
-          ): i.mdi-content-add.circle.red
+          )
+          i.mdi-content-add.white-text.small
           h5 #{title}
           if summary
-            p #{summary}
+            p !{summary}
           else if subtitle
-            p #{subtitle}
+            p !{subtitle}

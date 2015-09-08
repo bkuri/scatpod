@@ -22,7 +22,6 @@ gildaspk:autoform-materialize
 useraccounts:materialize
 accounts-password
 dburles:collection-helpers
-matb33:collection-hooks
 zimme:active-route
 mquandalle:moment
 
@@ -32,3 +31,9 @@ brentjanderson:buzz
 dburles:mongo-collection-instances
 ongoworks:security
 alanning:roles
+accounts-facebook
+accounts-twitter
+accounts-google
+softwarerero:accounts-t9n
+useraccounts:iron-routing
+service-configuration

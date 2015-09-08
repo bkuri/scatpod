@@ -1,6 +1,3 @@
-Meteor.subscribe 'playlist'
-Meteor.subscribe 'tracking'
-
 Meteor.startup ->
   ###
   lang = (TAPi18n.setLanguage window.navigator.userLanguage or window.navigator.language or 'en')
@@ -11,3 +8,4 @@ Meteor.startup ->
   ###
 
   Session.setDefault 'podcast', {}
+  Session.setDefault 'tracking', []

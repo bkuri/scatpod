@@ -20,5 +20,8 @@ Template.search.helpers
   isExplicit: (value) ->
     value is 'explicit'
 
+  isTracking: (id) ->
+    id in (Session.get 'tracking')
+
   results: ->
     Session.get 'results'

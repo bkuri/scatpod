@@ -21,10 +21,14 @@ with results
         +masonryContainer(columnWidth=110 gutter=10 id='grid' transitionDuration='0.1s')
           each results
             +masonryElement('grid')
-              .card.small.hoverable(data-feed='#{feedUrl}')
+              .card.small.hoverable(
+                data-id='#{collectionId}'
+                data-feed='#{feedUrl}'
+                data-genres='#{genres}'
+              )
                 
                 if isExplicit collectionExplicitness
-                  .ribbon EXPLICIT
+                  .ribbon.top-left.red.darken-4 EXPLICIT
                 
                 div($dyn=imbg)
                   img(
@@ -51,12 +55,19 @@ with results
                       href='#'
                     ): i.small.mdi-av-play-arrow
 
-                    a.disabled.tooltipped.black-text.join(
-                      data-position='left'
-                      data-tooltip='Subscribe to podcast'
-                      href='#'
-                    ): i.small.mdi-content-add
+                    if isTracking collectionId
+                      a.tooltipped.black-text.untrack(
+                        data-position='left'
+                        data-tooltip='Unsubscribe'
+                        href='#'
+                      ): i.small.mdi-action-done.light-green-text.accent-3
+                    else
+                      a.disabled.tooltipped.black-text.join(
+                        data-position='left'
+                        data-tooltip='Subscribe to podcast'
+                        href='#'
+                      ): i.small.mdi-content-add
 
                   img.thumb(src=artworkUrl60)
                   p.description
-                  +spinner
+                  +spinner_mini

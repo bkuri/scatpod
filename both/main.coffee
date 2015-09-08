@@ -1,4 +1,3 @@
-# Podcast episode schema
 EpisodeSchema = new SimpleSchema
   title:
     type: String
@@ -8,9 +7,11 @@ EpisodeSchema = new SimpleSchema
     type: String
 
   summary:
+    optional: true
     type: String
 
   published:
+    optional: true
     type: Date
 
   duration:
@@ -29,9 +30,9 @@ EpisodeSchema = new SimpleSchema
 
   'bookmarks.$.what':
     label: 'What'
+    max: 140
     optional: true
     type: String
-    max: 140
 
   'bookmarks.$.when':
     label: 'When'
@@ -48,26 +49,33 @@ EpisodeSchema = new SimpleSchema
     type: String
 
 
-# Episode playlist schema
 PlaylistSchema = new SimpleSchema
+  name:
+    type: String
+
   tracks:
     type: [EpisodeSchema]
 
 
-# Podcast schema
 PodcastSchema = new SimpleSchema
+  _id:
+    type: Number
+
   name:
     type: String
 
   summary:
-    type: String
     max: 4000
+    optional: true
+    type: String
 
   categories:
+    defaultValue: []
     optional: true
     type: [String]
 
   keywords:
+    defaultValue: []
     optional: true
     type: [String]
 
@@ -76,12 +84,13 @@ PodcastSchema = new SimpleSchema
     optional: true
     type: String
 
+  episodes:
+    optional: true
+    type: [EpisodeSchema]
+
   explicit:
     defaultValue: false
     type: Boolean
-
-  episodes:
-    type: [EpisodeSchema]
 
   copyright:
     optional: true
@@ -98,7 +107,6 @@ PodcastSchema = new SimpleSchema
     type: String
 
 
-# Podcast network schema
 NetworkSchema = new SimpleSchema
   name:
     type: String
@@ -116,8 +124,7 @@ NetworkSchema = new SimpleSchema
     type: String
 
 
-# Extra fields for tracking a podcast
-TrackedFields =
+TimeStampFields =
   added:
     autoValue: ->
       if @isInsert then new Date
@@ -135,23 +142,29 @@ TrackedFields =
     type: Date
 
 
-# Podcast schema + extra fields
-TrackedPodcastSchema = new SimpleSchema [PodcastSchema, TrackedFields]
+UserSchema = new SimpleSchema
+  emails:
+    optional: true
+    type: [Object]
+
+  'emails.$.address':
+    regEx: SimpleSchema.RegEx.Email
+    type: String
+
+  'emails.$.verified':
+    type: Boolean
+
+  'profile.$.playlists':
+    optional: true
+    type: [new SimpleSchema [PlaylistSchema, TimeStampFields]]
+
+  'profile.$.podcasts':
+    optional: true
+    type: [new SimpleSchema [PodcastSchema, TimeStampFields]]
 
 
-# Podcast subscription list
-TrackingSchema = new SimpleSchema
-  podcasts:
-    type: [TrackedPodcastSchema]
-
-
-# Define collections
 Networks = new Mongo.Collection 'networks'
-Playlist = new Mongo.Collection 'playlist'
-Tracking = new Mongo.Collection 'tracking'
 
 
-# Bind schemas to collections
+# Meteor.users.attachSchema UserSchema
 Networks.attachSchema NetworkSchema
-Playlist.attachSchema PlaylistSchema
-Tracking.attachSchema TrackingSchema

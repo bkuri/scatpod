@@ -1,21 +1,26 @@
 @import mixins
 
 // options
-$bgcolor = #B71C1C
 $color = rgba(255, 255, 255, 0.9)
-// $position = 'top-right' // or 'top-left'
-$position = 'top-left'
 
 // ribbon
 .ribbon
-  background-color $bgcolor
   color $color
   font bold 0.82em sans-serif
-  margin-left -80px
-  margin-top 15px
-  padding 0.6em 3.5em
-  ribbon-position $position
+  padding 0.2rem 0
+  position relative
   text-align center
   text-decoration none
   user-select none
-  z-index 10
+
+  &.top-left
+    left -80px
+    top 20px
+    transform rotate(-45deg)
+    z-index 10
+
+  &.top-right
+    right -86px
+    top 20px
+    transform rotate(45deg)
+    z-index 11

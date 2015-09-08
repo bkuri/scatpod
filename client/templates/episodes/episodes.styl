@@ -6,10 +6,26 @@
     line-height 1.1rem
 
   li.collection-item
-    min-height 65px
+    min-height 50px
     padding-left 10px
-    padding-right 72px
+    padding-right 50px
 
-    a > i
-      left inherit
-      right 10px
+    a[class^=queue]
+      border-style solid
+      border-width 0 50px 50px 0
+      position absolute
+      right 0
+      top 0
+
+      &.queue
+        border-color transparent #F44336 transparent transparent
+
+      &.queued
+        border-color transparent #AEEA00 transparent transparent
+
+      & + i
+        left inherit
+        pointer-events none
+        position absolute
+        right -1px
+        top 3px

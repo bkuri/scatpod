@@ -54,10 +54,15 @@ $element-width = 225px
 
     & > .card-title
       display block
+      font-size 20px
       pointer-events none
+
+  .card-image
+    height 180px !important
 
   .card-reveal
     cursor pointer
+    overflow hidden
 
     .preloader-wrapper
       top 40%
@@ -66,4 +71,4 @@ $element-width = 225px
     line-height 1.5rem !important
 
   .ribbon:not(.hide) + .card-image
-    margin-top -43px
+    margin-top -20px
