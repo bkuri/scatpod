@@ -1,65 +1,74 @@
 Template.search.events
   'click span.tools > a': (event) ->
-    $a = $(event.target).parent()
-    data = ($a.parents '.card').data()
-
     event.preventDefault()
     event.stopPropagation()
 
-    if ($a.hasClass 'list')
-      Session.set 'podcast', cid: data.id, list: (_.head data.meta.item, 10), name: data.meta.title
-      $('#episodes').openModal()
 
-    else if ($a.hasClass 'play')
-      track = (_.sample data.meta.item)
-      # console.log 'play', JSON.stringify item
-      s = new buzz.sound track.enclosure.$.url
+  'click span.tools > a.list': (event) ->
+    data = ($(event.target).parents '.card').data()
+    Session.set 'podcast', cid: data.id, list: (_.head data.meta.item, 10), name: data.meta.title
+    $('#episodes').openModal()
 
-      $a.addClass 'disabled'
-      sound.stop() for sound in buzz.sounds
 
-      if 'duration' in (Object.keys track)
-        timer = (buzz.fromTimer track.duration)
-        timeout = switch
-          when timer > 0 then (timer * 1000) - (90 * 1000)
-          else (90 * 1000)
+  'click span.tools > a.play': (event) ->
+    $a = $(event.target).parent()
+    item = _.sample (($a.parents '.card').data 'meta').item
+    date = (moment item.pubDate).format 'MMM Do YYYY'
+    track = new buzz.sound item.enclosure.$.url
 
-        s.setTime(90).setVolume(0).fadeTo 80, 10000
+    $a.addClass 'disabled playing'
+    sound.stop() for sound in buzz.sounds
 
-      else
-        timeout = (90 * 1000)
-        s.fadeIn()
-
-      date = moment(track.pubDate).format 'MMM Do YYYY'
-      Materialize.toast "#{track.title} (#{date})", timeout, '', -> s.fadeOut 1000, -> s.stop()
-
-    else if ($a.hasClass 'join')
-      # console.log JSON.stringify data
-      $a.addClass 'disabled'
-
-      if data.id in (Session.get 'tracking')
-        Materialize.toast 'Already subscribed to podcast', 1000
-        return
-
-      Meteor.call 'podcastAdd', data, (error, response) ->
-        return if error?
-        Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
-        Materialize.toast 'Subscribed to podcast', 1000
+    if 'duration' in (_.keys item)
+      offset = (90 * 1000)
+      timer = (buzz.fromTimer item.duration)
+      timeout = unless (timer > 0) then offset else (timer * 1000) - offset
+      (track.setTime 90).setVolume(0).fadeTo 80, 10000
 
     else
-      unless data.id in (Session.get 'tracking')
-        Materialize.toast 'Podcast not found in tracking list', 1000
-        return
+      timeout = (90 * 1000)
+      track.fadeIn()
 
-      Meteor.call 'podcastRemove', data.id, (error, response) ->
-        return if error?
-        $p = $a.parent()
-        Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+    Materialize.toast "#{track.title} (#{date})", timeout, '', ->
+      track.fadeOut 1000, ->
+        track.stop()
+        $a.removeClass 'disabled playing'
 
-        setTimeout ->
-          $p.find('a.join.disabled').removeClass 'disabled'
-          Materialize.toast 'Unsubscribed from podcast', 1000
-        , 100
+
+  'click span.tools > a.join': (event, template) ->
+    $a = $(event.target).parent()
+    data = ($a.parents '.card').data()
+
+    # console.log JSON.stringify data
+    $a.addClass 'disabled'
+
+    if data.id in (Session.get 'tracking')
+      Materialize.toast 'Already subscribed to podcast', 1000
+      return
+
+    Meteor.call 'podcastAdd', data, (error, response) ->
+      return if error?
+      Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+      Materialize.toast 'Subscribed to podcast', 1000
+
+
+  'click span.tools > a.untrack': (event, template) ->
+    $a = $(event.target).parent()
+    id = ($a.parents '.card').data 'id'
+
+    unless id in (Session.get 'tracking')
+      Materialize.toast 'Podcast not found in tracking list', 1000
+      return
+
+    Meteor.call 'podcastRemove', id, (error, response) ->
+      return if error?
+      $desc = $a.parent()
+      Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+
+      Meteor.setTimeout ->
+        $p.find('a.join.disabled').removeClass 'disabled'
+        Materialize.toast 'Unsubscribed from podcast', 1000
+      , 100
 
 
   'click .activator': (event) ->
@@ -68,17 +77,20 @@ Template.search.events
 
     event.preventDefault()
 
-    Meteor.call 'getFeed', ($card.data 'feed'), (error, response) ->
+    Meteor.call 'getFeed', ($card.data 'feed'), (error, data) ->
       unless error?
-        # console.log (JSON.stringify response)
-        $p = $('p.description', $card).text response.description
+        # console.log (JSON.stringify data)
+        limit = 280
+        desc = if (limit > data.description.length) then data.description else "#{(data.description.substr 0, limit).trim()}…"
+        $p = $('p.description', $card).text desc
 
-        $card.data meta: (_.omit response, ['info', 'link', 'owner'])
-        $('span.tools > a', $card).removeClass 'disabled'
+        $card.data meta: (_.omit data, ['info', 'link', 'owner'])
+        $('span.tools > a', $card).tooltip delay: 50
+        $('span.tools > a:not(.playing)', $card).removeClass 'disabled'
 
         $spinner.fadeOut ->
           $p.fadeIn()
-          $(@).remove()
+          $(@).parents('.valign-wrapper').remove()
 
       else
         console.error error
@@ -90,7 +102,13 @@ Template.search.events
 
 
   'click .card-reveal': (event) ->
+    $('body > div.material-tooltip').remove()
     $(event.target).find('.card-title').click()
+
+
+  'click .load-more': (event, template) ->
+    event.preventDefault()
+    template.limit.set template.limit.get() + 24
 
 
   'submit form': (event, template) ->
@@ -100,7 +118,7 @@ Template.search.events
     query =
       # attribute: 'descriptionTerm'
       entity: 'podcast'
-      limit: 48
+      limit: 200
       term: (template.find '#query').value
 
     Meteor.call 'podcastSearch', query, (error, response) ->
@@ -109,5 +127,5 @@ Template.search.events
         (Session.set 'results', {error})
 
       else
-        # console.log (JSON.stringify response.results)
+        console.log (JSON.stringify response.results)
         (Session.set 'results', response.results)

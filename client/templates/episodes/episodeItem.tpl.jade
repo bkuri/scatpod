@@ -1,0 +1,9 @@
+h5 {{truncate title 60}}
+h6 {{released pubDate}}
+  
+if summary
+  p {{{truncate summary 200}}}
+else if subtitle
+  p {{{truncate subtitle 200}}}
+else
+  p No summary found.

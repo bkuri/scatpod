@@ -10,11 +10,9 @@ mquandalle:jade
 coffeescript
 mquandalle:stylus
 iron:router
-msavin:mongol
 fortawesome:fontawesome
 aldeed:simple-schema
 http
-robodo:masonrify
 materialize:materialize
 aldeed:collection2
 aldeed:autoform
@@ -37,3 +35,7 @@ accounts-google
 softwarerero:accounts-t9n
 useraccounts:iron-routing
 service-configuration
+fastclick
+meteorhacks:fast-render
+reactive-var
+voodoohop:masonrify

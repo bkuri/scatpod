@@ -3,35 +3,43 @@ EpisodeSchema = new SimpleSchema
     type: String
 
   subtitle:
-    optional: true
+    optional: yes
     type: String
 
   summary:
-    optional: true
+    optional: yes
     type: String
 
   published:
-    optional: true
+    optional: yes
     type: Date
 
   duration:
     min: 0
-    optional: true
+    optional: yes
+    type: Number
+
+  offset:
+    min: 0
+    optional: yes
+    type: Number
+
+  parent:
     type: Number
 
   progress:
-    decimal: true
+    decimal: yes
     defaultValue: 0
     label: 'Progess %'
     max: 100
     min: 0
-    optional: true
+    optional: yes
     type: Number
 
   'bookmarks.$.what':
     label: 'What'
     max: 140
-    optional: true
+    optional: yes
     type: String
 
   'bookmarks.$.when':
@@ -40,8 +48,8 @@ EpisodeSchema = new SimpleSchema
     type: Number
 
   explicit:
-    defaultValue: false
-    optional: true
+    defaultValue: no
+    optional: yes
     type: Boolean
 
   url:
@@ -66,44 +74,44 @@ PodcastSchema = new SimpleSchema
 
   summary:
     max: 4000
-    optional: true
+    optional: yes
     type: String
 
   categories:
     defaultValue: []
-    optional: true
+    optional: yes
     type: [String]
 
   keywords:
     defaultValue: []
-    optional: true
+    optional: yes
     type: [String]
 
   language:
     defaultValue: 'en'
-    optional: true
+    optional: yes
     type: String
 
   episodes:
-    optional: true
+    optional: yes
     type: [EpisodeSchema]
 
   explicit:
-    defaultValue: false
+    defaultValue: no
     type: Boolean
 
   copyright:
-    optional: true
+    optional: yes
     type: String
 
   thumbnail:
     label: 'Thumbnail URL'
-    optional: true
+    optional: yes
     type: String
 
   url:
     label: 'Podcast URL'
-    optional: true
+    optional: yes
     type: String
 
 
@@ -116,11 +124,18 @@ NetworkSchema = new SimpleSchema
 
   thumbnail:
     label: 'Thumbnail URL'
-    optional: true
+    optional: yes
     type: String
 
   url:
     label: 'Website'
+    type: String
+
+
+SettingsSchema = new SimpleSchema
+  language:
+    defaultValue: 'en'
+    optional: yes
     type: String
 
 
@@ -137,14 +152,14 @@ TimeStampFields =
     autoValue: ->
       new Date if @isUpdate
 
-    denyInsert: true
-    optional: true
+    denyInsert: yes
+    optional: yes
     type: Date
 
 
 UserSchema = new SimpleSchema
   emails:
-    optional: true
+    optional: yes
     type: [Object]
 
   'emails.$.address':
@@ -154,12 +169,21 @@ UserSchema = new SimpleSchema
   'emails.$.verified':
     type: Boolean
 
+  'profile.playlist':
+    defaultValue: 'main'
+    optional: yes
+    type: String
+
+  'profile.settings':
+    optional: yes
+    type: SettingsSchema
+
   'profile.$.playlists':
-    optional: true
+    optional: yes
     type: [new SimpleSchema [PlaylistSchema, TimeStampFields]]
 
   'profile.$.podcasts':
-    optional: true
+    optional: yes
     type: [new SimpleSchema [PodcastSchema, TimeStampFields]]
 
 

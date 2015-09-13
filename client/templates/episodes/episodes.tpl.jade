@@ -1,17 +1,30 @@
 #episodes.modal.bottom-sheet
   .modal-content
     h4 #{name}
-    ul.collection(data-tracking='#{tracking}')
-      each list
-        li.collection-item.avatar.dismissable
-          a.queue(
-            data-title='{{title}}'
-            data-url='{{enclosure.$.url}}'
-            href='#'
-          )
-          i.mdi-content-add.white-text.small
-          h5 #{title}
-          if summary
-            p !{summary}
-          else if subtitle
-            p !{subtitle}
+    ul.collection
+      if tracking
+        each list
+          if isEpisodeQueued enclosure.$.url
+            li.collection-item.avatar.dismissable
+              a.queued(
+                data-title='{{title}}'
+                data-url='{{enclosure.$.url}}'
+                href='#'
+              )
+              i.mdi-content-remove.black-text.small
+              +episodeItem
+          
+          else
+            li.collection-item.avatar.dismissable
+              a.queue(
+                data-title='{{title}}'
+                data-url='{{enclosure.$.url}}'
+                href='#'
+              )
+              i.mdi-content-add.white-text.small
+              +episodeItem          
+
+      else
+        each list
+          li.collection-item
+            +episodeItem

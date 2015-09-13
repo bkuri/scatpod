@@ -50,7 +50,7 @@ getFeed = (url, callback) ->
     HTTP.get url, (error, data) ->
       unless error?
         xml = xml2js.parseStringSync data.content,
-          explicitArray: false
+          explicitArray: no
           tagNameProcessors: [xml2js.processors.stripPrefix]
 
         callback null, xml.rss.channel
@@ -125,7 +125,10 @@ Meteor.methods
     Meteor.users.update {_id: Meteor.userId()}, $push: 'profile.podcasts': podcast
 
   'podcastRemove': (_id) ->
-    Meteor.users.update {_id: Meteor.userId()}, $pull: 'profile.podcasts': {_id}
+    userid = _id: Meteor.userId()
+    # TODO remove episodes with parent === _id
+    # Meteor.users.update userid, $pull: 'profile.playlists': 'tracks.parent': $eq: _id, {multi: yes}
+    Meteor.users.update userid, $pull: 'profile.podcasts': {_id}
 
   'podcastSearch': (params) ->
     @unblock()

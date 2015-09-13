@@ -1,2 +1,2 @@
 Accounts.onCreateUser (options, user) ->
-  _.extend user, profile: playlists: [name: 'main', tracks: []], podcasts: []
+  _.extend user, profile: playlist: 'main', playlists: [name: 'main', tracks: []], podcasts: [], settings: {}

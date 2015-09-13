@@ -8,15 +8,15 @@ Router.plugin 'ensureSignedIn', only: ['search']
 
 
 AccountsTemplates.configure
-  showForgotPasswordLink: true
-  overrideLoginErrors: true
-  enablePasswordChange: true
-  sendVerificationEmail: false
-  confirmPassword: true
-  negativeValidation: true
-  positiveValidation:true
-  negativeFeedback: false
-  positiveFeedback:false
+  showForgotPasswordLink: yes
+  overrideLoginErrors: yes
+  enablePasswordChange: yes
+  sendVerificationEmail: no
+  confirmPassword: yes
+  negativeValidation: yes
+  positiveValidation: yes
+  negativeFeedback: no
+  positiveFeedback: no
 
 
 AccountsTemplates.configureRoute 'changePwd'

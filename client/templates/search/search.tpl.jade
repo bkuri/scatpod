@@ -1,73 +1,91 @@
 +episodes
 
-.container-fluid.row
-  .col.l9.m11.s12.offset-l1.input-field
-    form
-      i.mdi-action-search.prefix
-      input#query.validate(
-        autofocus
-        name='query'
-        placeholder='Podcast name, category, network, etc.'
-        type='text'
-      )
+.container-fluid
+  .row.teal
+    .col.l6.m12.s12.offset-l3
+      .input-field
+        form
+          i.mdi-action-search.prefix.white-text
+          input#query.white-text(autofocus placeholder='Keyword search' type='text')
 
-with results
-  if error
-    p There was an error: #{error.errorType} #{error.message}!
-  
-  else
-    .container-fluid.row
-      .col.l10.m12.s12.offset-l1
-        +masonryContainer(columnWidth=110 gutter=10 id='grid' transitionDuration='0.1s')
-          each results
-            +masonryElement('grid')
-              .card.small.hoverable(
-                data-id='#{collectionId}'
-                data-feed='#{feedUrl}'
-                data-genres='#{genres}'
-              )
-                
-                if isExplicit collectionExplicitness
-                  .ribbon.top-left.red.darken-4 EXPLICIT
-                
-                div($dyn=imbg)
-                  img(
-                    src=artworkUrl600
-                    title='#{collectionName}'
-                  )
+  with results
+    if error
+      .row: p There was an error: #{error.errorType} #{error.message}!
+    
+    else
+      .row
+        .col.l10.m12.s12.offset-l1
+          +masonryContainer(
+            columnWidth='.grid-sizer'
+            gutter='.gutter-sizer'
+            id='grid'
+            percentPosition=true
+            transitionDuration='0.1s'
+          )
+            .grid-sizer
+            .gutter-sizer
+            each results
+              +masonryElement('grid')
+                .card.small.hoverable(
+                  data-id='#{collectionId}'
+                  data-feed='#{feedUrl}'
+                  data-genres='#{genres}'
+                )
+                  //- if isExplicit collectionExplicitness
+                  //-   .ribbon.top-left.red.darken-4 EXPLICIT
+                  
+                  div($dyn=imbg)
+                    img(
+                      src=artworkUrl600
+                      title='#{collectionName}'
+                    )
 
-                .card-content.activator
-                  span.card-title.grey-text.text-darken-4 #{collectionName}
+                  .card-content.activator
+                    span.card-title.grey-text.text-darken-4 {{truncate collectionName 60}}
 
-                .card-reveal
-                  span.card-title
-
-                  span.tools
-                    a.disabled.tooltipped.black-text.list(
-                      data-position='left'
-                      data-tooltip='Show latest episodes'
-                      href='#'
-                    ): i.small.mdi-action-list
-
-                    a.disabled.tooltipped.black-text.play(
-                      data-position='left'
-                      data-tooltip='Listen to a random show'
-                      href='#'
-                    ): i.small.mdi-av-play-arrow
-
-                    if isTracking collectionId
-                      a.tooltipped.black-text.untrack(
+                  .card-reveal
+                    span.tools
+                      a.disabled.tooltipped.black-text.list(
                         data-position='left'
-                        data-tooltip='Unsubscribe'
+                        data-tooltip='Show latest episodes'
                         href='#'
-                      ): i.small.mdi-action-done.light-green-text.accent-3
-                    else
-                      a.disabled.tooltipped.black-text.join(
-                        data-position='left'
-                        data-tooltip='Subscribe to podcast'
-                        href='#'
-                      ): i.small.mdi-content-add
+                      ): i.small.mdi-action-list
 
-                  img.thumb(src=artworkUrl60)
-                  p.description
-                  +spinner_mini
+                      a.disabled.tooltipped.black-text.play(
+                        data-position='left'
+                        data-tooltip='Listen to a random show'
+                        href='#'
+                      ): i.small.mdi-av-play-arrow
+
+                      if isTracking collectionId
+                        a.tooltipped.black-text.untrack(
+                          data-position='left'
+                          data-tooltip='Unsubscribe'
+                          href='#'
+                        ): i.small.mdi-action-done.light-green-text.accent-3
+
+                      else
+                        a.disabled.tooltipped.black-text.join(
+                          data-position='left'
+                          data-tooltip='Subscribe to podcast'
+                          href='#'
+                        ): i.small.mdi-content-add
+
+                    img.thumb(src=artworkUrl60)
+                    span.card-title.grey-text.text-darken-4
+                      | {{truncate collectionName 60}}
+                      if isExplicit collectionExplicitness
+                        span.label.red explicit
+                      each labelize genres
+                        span.label #{this}
+                    p.description
+                    +spinner_mini
+
+    if Template.subscriptionsReady
+      if moreResults
+        .row
+          .col.l10.m12.s12.offset-l1
+            a.btn-large.load-more(href='#') Load More
+    else
+      .row
+        +spinner_mini

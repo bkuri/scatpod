@@ -1,7 +1,7 @@
 Template.playlist.helpers
   items: ->
     filter = switch
-      when (Session.get 'hidePlayed') then played: $ne: true
+      when (Session.get 'hidePlayed') then played: $ne: yes
       else {}
 
     Playlist.find filter, createdAt: -1
@@ -10,4 +10,4 @@ Template.playlist.helpers
     Session.get 'hidePlayed'
 
   unplayedCount: ->
-    (Playlist.find played: $ne: true).count()
+    (Playlist.find played: $ne: yes).count()
