@@ -4,15 +4,11 @@ Template.search.helpers
       'card-image waves-block waves-effect waves-light'
 
       _.sample [
-        'red','pink','purple','deep-purple','indigo','blue','light-blue','cyan',
-        'teal','green','light-green','lime','yellow','amber','orange','deep-orange',
-        'brown','grey','blue-grey'
+        'red','pink','purple','deep-purple','indigo','blue','cyan',
+        'teal','green','lime','yellow','amber','orange','deep-orange'
       ]
 
-      _.sample [
-        'lighten-5','lighten-4','lighten-3','lighten-2','lighten-1',
-        'darken-1','darken-2','darken-3','darken-4', ''
-      ]
+      _.sample ['', 'darken-1', 'darken-2', 'darken-3', 'darken-4', 'lighten-1', 'lighten-2']
     ].join ' '
 
 
@@ -25,8 +21,9 @@ Template.search.helpers
 
 
   labelize: (genres) ->
-    labels = _.reject genres, (g) -> (g.toLowerCase() is 'podcasts')
-    labels.sort (a, b) -> (a.length - b.length)
+    labels = _.reject (_.first genres, 3), (g) -> (g.toLowerCase() is 'podcasts')
+    # labels.sort (a, b) -> (a.length - b.length)
+    labels
 
 
   moreResults: ->
@@ -34,7 +31,17 @@ Template.search.helpers
 
 
   results: ->
-    _.take (Session.get 'results'), Template.instance().limit.get()
+    results = (Search.find {}, reactive: no).fetch()[0]
+    template = Template.instance()
+    values = _.values (_.omit results, '_id')
+
+    $('#brand').text "\"#{results._id}\""
+    template.count.set values.length
+    _.take values, template.limit.get()
+
+
+  smallScreen: ->
+    window.innerWidth < 601
 
 
   truncate: (what, limit) ->

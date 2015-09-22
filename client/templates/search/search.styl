@@ -1,139 +1,230 @@
-#query
-  font-size 2rem
-  text-align center
+#fab
+  bottom -55px
+  right 40px
 
-a.load-more
-  width 100%
+#results
+  // mobile devices (single column)
+  @media screen and (max-width: 600px)
+    .card-title
+      font-size 1rem
 
-// mobile devices
-@media screen and (max-width: 600px)
-  .card-title
-    font-size 1rem
+    .grid-sizer, .masonry-element
+      width 100%
 
-  .grid-sizer, .masonry_element
-    width 100%
-
-  .gutter-sizer
-    width 0
-
-// tablet devices
-@media screen and (min-width: 601px) and (max-width: 992px)
-  /*
-  .card-reveal
-    padding 0 !important
-
-  .col
-    padding 0 3.5rem !important
-  */
-
-  .grid-sizer, .masonry_element
-    width 49%
-
-  .gutter-sizer
-    width 2%
-
-// desktop devices
-@media screen and (min-width: 993px)
-  .grid-sizer, .masonry_element
-    width 19%
-
-  .gutter-sizer
-    width 1.25%
-
-.masonry_element
-  img
-    border-radius 0
-    height auto
-
-    &.thumb
-      background-color black
-      border 2px solid black
-      border-radius 4px
-      float left
-      margin 0 5px 0 0
-      width 70px
-
-  p.description
-    display none
-    line-height 1.1
-    margin 5px 0
-    pointer-events none
-    text-align justify
-
-  span.tools
-    // display block
-    float right
-    line-height 1rem
-    // margin-top -5px
-
-    a.disabled
-      cursor not-allowed
-      opacity 0.25
-      pointer-events none
-
-  .card.small
-    border-radius 2px
-    margin 0 0 1.25rem
-
-    .explicit
-      border-color #f44236 transparent transparent transparent
-      border-style solid
-      border-width 34px 34px 0 0
-      height 0
+    .gutter-sizer
       width 0
 
-  .card-content
-    cursor pointer
 
-    & > .card-title
-      display block
-      font-size 1.5rem
-      line-height 1.5rem !important
-      pointer-events none
+  // smaller tablets (2 columns)
+  @media screen and (min-width: 601px) and (max-width: 992px)
+    .grid-sizer, .masonry-element
+      width 49%
 
-  .card-image
-    height 180px !important
+    .gutter-sizer
+      width 2%
 
-  .card-reveal
-    cursor pointer
+
+  // larger tablets (3 columns)
+  @media screen and (min-width: 993px) and (max-width: 1280px)
+    .grid-sizer, .masonry-element
+      width 32.4444%
+
+    .gutter-sizer
+      width 1.3334%
+
+
+  // desktop devices (5 columns)
+  // @media screen and (min-width: 993px)
+  @media screen and (min-width: 1281px)
+    .grid-sizer, .masonry-element
+      width 19%
+
+    .gutter-sizer
+      width 1.25%
+
+
+  &.container
     overflow hidden
+    width 100%
 
-    .card-title
-      font-size 1.2rem
-      line-height 0.9
+    .col
+      padding 0 0.5rem
+
+
+  &.container-fluid
+    margin-top 2.5rem
+
+
+  .collection
+    border none
+
+    .divider
+      margin 5px 0
+
+
+  .collection-item-avatar
+    border-bottom 1px solid #e0e0e0
+    height 75px
+    margin -5px 0 5px
+    max-height 75px
+    padding 0
+
+    a
+      &.primary-content
+        float left
+        height 100%
+        padding 5px 10px 0 10px
+        width 100%
+
+      &.secondary-content
+        position relative
+        right 0
+        top 9px
+
+    br
+      margin-bottom 2px
+
+    h6
+      font-size 1.1rem
+      font-weight 300
+      line-height 1
+      margin 0
+      min-height 2rem
+      width 20rem
+
+    img
+      max-width 100%
+
+    p
+      line-height 1
+      margin 0
+      padding-left 70px
+      padding-top 2px
+
+    strong
+      font-size smaller
+
+    .thumb
+      border 2px solid black
+      border-radius 3px
+      display table-cell
+      float left
+      height 64px
+      margin 0 auto
+      vertical-align middle
+      width 64px
+
 
   .label
-    background-color black
     border-radius 2px
     color #ffffff
     display inline-block
-    font-size 0.7rem
-    font-weight 400
-    line-height 1.2
-    padding 4px 4px 2px 4px
+    font-size 0.6rem
+    font-weight 500
+    padding 5px 4px 3px 4px
     text-transform uppercase
     vertical-align baseline
-    white-space nowrap
 
-  .label:not(:last-child)
+    &.red
+      margin-right -1px !important
+
+
+  .label:not(:last-child),
+  .label:not(.red)
     margin-right 2px
 
+
   .labels
-    // display inline-block
+    margin-top 2px
     pointer-events none
 
-  .ribbon:not(.hide) + .card-image
-    margin-top -20px
 
-  .valign, .valign-wrapper
-    width 100%
+  .masonry-element
+    img
+      border-radius 0
+      height auto
 
-  .valign-wrapper
-    height 100%
-    left 0
-    pointer-events none
-    position absolute
-    top 0
+      &.thumb
+        background-color black
+        border 2px solid black
+        border-radius 4px
+        float left
+        margin 0 5px 0 0
+        width 70px
 
-.row:not(:first-child)
-  margin-bottom inherit
+    p.description
+      line-height 1.1
+      margin 2px 0
+      opacity 0
+      text-align justify
+
+    span.tools
+      // display block
+      float right
+      line-height 1rem
+      // margin-top -5px
+
+      a.disabled
+        cursor not-allowed
+        opacity 0.25
+        pointer-events none
+
+    .card.small
+      border-radius 2px
+      margin 0 0 1.25rem
+
+    .card-content
+      cursor pointer
+
+      > .card-title
+        display block
+        font-size 1.5rem
+        line-height 1.5rem !important
+        pointer-events none
+
+    .card-image
+      height 180px !important
+      transition background-color 0.25s
+
+      img
+        opacity 0.1
+        transform translateY(-10%)
+        transition all 0.25s ease-out
+
+        &.hovering
+          opacity 1
+          transform translateY(-15%)
+
+    .card-reveal
+      cursor pointer
+      overflow hidden
+      pointer-events none
+
+      .card-title
+        font-size 1.2rem
+        line-height 1
+        margin-top -2px
+
+      span.card-title,
+      span.tools > a
+        pointer-events auto
+
+    .ribbon:not(.hide) + .card-image
+      margin-top -20px
+
+    .valign, .valign-wrapper
+      width 100%
+
+    .valign-wrapper
+      height 100%
+      left 0
+      position absolute
+      top 0
+
+
+  .new
+    opacity 0
+
+
+  .row:not(:first-child)
+    margin-bottom inherit

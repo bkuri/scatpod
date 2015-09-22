@@ -1,0 +1,16 @@
+#details(data-id='#{cid}')
+  .container
+    canvas#bg(
+      data-img='{{bg img}}'
+      height='200'
+      width='200'
+    )
+
+    .row
+      a.btn-flat.waves-effect.waves-teal.right(href='#')
+        i.mdi-navigation-close.right
+        | Close
+
+    .row
+      .col.l10.m12.s12.offset-l1
+        +episodes

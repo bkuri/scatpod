@@ -1,91 +1,80 @@
-+episodes
++fab
 
-.container-fluid
-  .row.teal
-    .col.l6.m12.s12.offset-l3
-      .input-field
-        form
-          i.mdi-action-search.prefix.white-text
-          input#query.white-text(autofocus placeholder='Keyword search' type='text')
+if smallScreen
+  #results.container
+    .row
+      .col.l10.m12.s12.offset-l1
+        ul.collection
+          each results
+            li.new.collection-item-avatar(
+              data-id='#{collectionId}'
+              data-img='#{artworkUrl600}'
+              data-feed='#{feedUrl}'
+              data-genres='#{genres}'
+            )
+              a.black-text.primary-content.waves-effect(href='#')
+                if isTracking collectionId
+                  a.disabled.black-text.secondary-content.untrack(href='#'): i.small.mdi-content-remove-circle
+                else
+                  a.disabled.black-text.secondary-content.join(href='#'): i.small.mdi-content-add-circle
+                .thumb: img(src=artworkUrl60)
+                p
+                  h6 {{truncate collectionCensoredName 54}}
+                  strong {{truncate artistName 34}}
+                  br
+                  if isExplicit collectionExplicitness
+                    span.label.red explicit
+                  each labelize genres
+                    span.label.grey.darken-1 #{this}
 
-  with results
-    if error
-      .row: p There was an error: #{error.errorType} #{error.message}!
-    
-    else
-      .row
-        .col.l10.m12.s12.offset-l1
-          +masonryContainer(
-            columnWidth='.grid-sizer'
-            gutter='.gutter-sizer'
-            id='grid'
-            percentPosition=true
-            transitionDuration='0.1s'
-          )
-            .grid-sizer
-            .gutter-sizer
-            each results
-              +masonryElement('grid')
-                .card.small.hoverable(
-                  data-id='#{collectionId}'
-                  data-feed='#{feedUrl}'
-                  data-genres='#{genres}'
-                )
-                  //- if isExplicit collectionExplicitness
-                  //-   .ribbon.top-left.red.darken-4 EXPLICIT
-                  
-                  div($dyn=imbg)
-                    img(
-                      src=artworkUrl600
-                      title='#{collectionName}'
-                    )
+else
+  +episodesModal
+  
+  #results.container-fluid
+    .row
+      .col.l10.m12.s12.offset-l1
+        +masonryContainer(
+          columnWidth='.grid-sizer'
+          gutter='.gutter-sizer'
+          id='grid'
+          percentPosition=true
+          transitionDuration='0.1s'
+        )
+          .grid-sizer
+          .gutter-sizer
+          each results
+            +masonryElement('grid')
+              .card.small.hoverable(
+                data-id='#{collectionId}'
+                data-feed='#{feedUrl}'
+                data-genres='#{genres}'
+              )
+                div($dyn=imbg)
+                  img(
+                    src=artworkUrl600
+                    title='#{collectionName}'
+                  )
 
-                  .card-content.activator
-                    span.card-title.grey-text.text-darken-4 {{truncate collectionName 60}}
+                .card-content.activator
+                  span.card-title.grey-text.text-darken-4 {{truncate collectionName 60}}
 
-                  .card-reveal
-                    span.tools
-                      a.disabled.tooltipped.black-text.list(
-                        data-position='left'
-                        data-tooltip='Show latest episodes'
-                        href='#'
-                      ): i.small.mdi-action-list
+                .card-reveal
+                  span.tools
+                    a.disabled.black-text.list(href='#'): i.small.mdi-av-album
+                    a.disabled.black-text.play(href='#'): i.small.mdi-av-play-circle-fill
+                    if isTracking collectionId
+                      a.disabled.black-text.untrack(href='#'): i.small.mdi-content-remove-circle
+                    else
+                      a.disabled.black-text.join(href='#'): i.small.mdi-content-add-circle
 
-                      a.disabled.tooltipped.black-text.play(
-                        data-position='left'
-                        data-tooltip='Listen to a random show'
-                        href='#'
-                      ): i.small.mdi-av-play-arrow
+                  img.thumb(src=artworkUrl60)
+                  span.card-title.grey-text.text-darken-4 {{truncate collectionName 50}}
 
-                      if isTracking collectionId
-                        a.tooltipped.black-text.untrack(
-                          data-position='left'
-                          data-tooltip='Unsubscribe'
-                          href='#'
-                        ): i.small.mdi-action-done.light-green-text.accent-3
+                  .labels
+                    if isExplicit collectionExplicitness
+                      span.label.red explicit
+                    each labelize genres
+                      span.label.grey.darken-1 #{this}
 
-                      else
-                        a.disabled.tooltipped.black-text.join(
-                          data-position='left'
-                          data-tooltip='Subscribe to podcast'
-                          href='#'
-                        ): i.small.mdi-content-add
-
-                    img.thumb(src=artworkUrl60)
-                    span.card-title.grey-text.text-darken-4
-                      | {{truncate collectionName 60}}
-                      if isExplicit collectionExplicitness
-                        span.label.red explicit
-                      each labelize genres
-                        span.label #{this}
-                    p.description
-                    +spinner_mini
-
-    if Template.subscriptionsReady
-      if moreResults
-        .row
-          .col.l10.m12.s12.offset-l1
-            a.btn-large.load-more(href='#') Load More
-    else
-      .row
-        +spinner_mini
+                  p.description
+                  +spinner_mini

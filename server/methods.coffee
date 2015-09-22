@@ -8,13 +8,6 @@ apiCall = (url, params, callback) ->
     callback (new Meteor.Error 500, 'API error'), null
 
 
-getCategories = (data) ->
-  return [] unless data.category?
-  console.log 'CATEGORY', JSON.stringify data.category
-  # FIXME
-  return []
-
-
 getCopyright = (data) ->
   return '' unless data.copyright?
   cc = if (typeof data.copyright is 'string') then data.copyright else data.copyright[0]
@@ -22,7 +15,7 @@ getCopyright = (data) ->
   # console.log 'COPYRIGHT', JSON.stringify cc
   return cc
 
-
+###
 getEpisodes = (data) ->
   return [] unless data.item?
 
@@ -37,28 +30,28 @@ getEpisodes = (data) ->
       url: (getLink ep)
 
   return episodes
-
+###
 
 getExplicit = (p) ->
   p.explicit? and (p.explicit.toLowerCase() is 'yes')
 
 
 getFeed = (url, callback) ->
-  meteorError = (new Meteor.Error 500, 'Could not fetch feed')
+  HTTP.get url, (error, data) ->
+    meteorError = (new Meteor.Error 500, 'Could not fetch feed')
 
-  try
-    HTTP.get url, (error, data) ->
-      unless error?
+    unless error?
+      try
         xml = xml2js.parseStringSync data.content,
           explicitArray: no
           tagNameProcessors: [xml2js.processors.stripPrefix]
 
         callback null, xml.rss.channel
 
-      else (callback meteorError, null)
+      catch error
+        callback meteorError, null
 
-  catch error
-    callback meteorError, null
+    else (callback meteorError, null)
 
 
 getImage = (data) ->
@@ -130,6 +123,11 @@ Meteor.methods
     # Meteor.users.update userid, $pull: 'profile.playlists': 'tracks.parent': $eq: _id, {multi: yes}
     Meteor.users.update userid, $pull: 'profile.podcasts': {_id}
 
-  'podcastSearch': (params) ->
+  'podcastSearch': (term) ->
     @unblock()
-    (Meteor.wrapAsync apiCall) "https://itunes.apple.com/search", params
+
+    params = _.extend {term},
+      entity: 'podcast'
+      limit: 200
+
+    (Meteor.wrapAsync apiCall) 'https://itunes.apple.com/search', params

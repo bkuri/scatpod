@@ -1,4 +1,13 @@
 Template.search.events
+  'click #fab > a': (event) ->
+    event.preventDefault()
+
+    $('html').velocity 'scroll',
+      duration: ($(window).scrollTop() / 3)
+      easing: 'ease-out'
+      mobileHA: no
+
+
   'click span.tools > a': (event) ->
     event.preventDefault()
     event.stopPropagation()
@@ -13,7 +22,7 @@ Template.search.events
   'click span.tools > a.play': (event) ->
     $a = $(event.target).parent()
     item = _.sample (($a.parents '.card').data 'meta').item
-    date = (moment item.pubDate).format 'MMM Do YYYY'
+    date = (moment item.pubDate).format 'MMM Do, YYYY'
     track = new buzz.sound item.enclosure.$.url
 
     $a.addClass 'disabled playing'
@@ -53,7 +62,7 @@ Template.search.events
 
 
   'click span.tools > a.untrack': (event, template) ->
-    $a = $(event.target).parent()
+    $a = $(event.currentTarget)
     id = ($a.parents '.card').data 'id'
 
     unless id in (Session.get 'tracking')
@@ -66,66 +75,57 @@ Template.search.events
       Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
 
       Meteor.setTimeout ->
-        $p.find('a.join.disabled').removeClass 'disabled'
+        $('a.join.disabled', $p).removeClass 'disabled'
         Materialize.toast 'Unsubscribed from podcast', 1000
       , 100
 
 
-  'click .activator': (event) ->
-    $card = $(event.target).parents '.card'
-    $spinner = $card.find('.preloader-wrapper').addClass 'active'
+  'click ul.collection a.primary-content': (event, template) ->
+    data = $(event.currentTarget).parents('li').data()
 
+    Router.go 'details', cid: data.id, img: (encodeURIComponent data.img), url: (encodeURIComponent data.feed)
     event.preventDefault()
+
+
+  'click .activator': (event) ->
+    event.preventDefault()
+    $card = $(event.currentTarget).parents '.card'
+    $spinner = $('.preloader-wrapper', $card).addClass 'active'
 
     Meteor.call 'getFeed', ($card.data 'feed'), (error, data) ->
       unless error?
-        # console.log (JSON.stringify data)
+        $p = $('p.description', $card)
+        desc = if (_.isArray data.description) then data.description[0] else data.description
         limit = 280
-        desc = if (limit > data.description.length) then data.description else "#{(data.description.substr 0, limit).trim()}…"
-        $p = $('p.description', $card).text desc
 
-        $card.data meta: (_.omit data, ['info', 'link', 'owner'])
-        $('span.tools > a', $card).tooltip delay: 50
-        $('span.tools > a:not(.playing)', $card).removeClass 'disabled'
+        if (desc.length > limit) then desc = "#{(desc.substr 0, limit).trim()}…"
+        $card.data meta: (_.omit data, ['description', 'info', 'link', 'owner'])
+        $('span.tools > a', $card).not('.playing').removeClass 'disabled'
 
-        $spinner.fadeOut ->
-          $p.fadeIn()
-          $(@).parents('.valign-wrapper').remove()
+        $spinner.velocity
+          opacity: 0
+
+          complete: ->
+            $p.text(desc).velocity opacity: 1, duration: 0.5
+            # $spinner.parents('.valign-wrapper').remove()
 
       else
         console.error error
-        $spinner.remove()
+        $spinner.velocity opacity: 0, duration: 0.5
 
 
   'click .card-image': (event) ->
-    $(event.target).parents('.card').find('.activator').click()
+    $(event.currentTarget).parents('.card').find('.activator').click()
 
-
+  ###
   'click .card-reveal': (event) ->
     $('body > div.material-tooltip').remove()
-    $(event.target).find('.card-title').click()
+    $(event.currentTarget).find('.card-title').click()
+  ###
+
+  'mouseenter .hoverable': (event, template) ->
+    $(event.currentTarget).find('.card-image > img').addClass 'hovering'
 
 
-  'click .load-more': (event, template) ->
-    event.preventDefault()
-    template.limit.set template.limit.get() + 24
-
-
-  'submit form': (event, template) ->
-    event.preventDefault()
-    Session.set 'results', []
-
-    query =
-      # attribute: 'descriptionTerm'
-      entity: 'podcast'
-      limit: 200
-      term: (template.find '#query').value
-
-    Meteor.call 'podcastSearch', query, (error, response) ->
-      if error?
-        console.error 'ERROR', error
-        (Session.set 'results', {error})
-
-      else
-        console.log (JSON.stringify response.results)
-        (Session.set 'results', response.results)
+  'mouseleave .hoverable': (event, template) ->
+    $(event.currentTarget).find('.card-image > img').removeClass 'hovering'

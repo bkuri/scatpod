@@ -1,39 +1,44 @@
 .navbar-fixed
-  nav.white(role='navigation')
+  nav.red.darken-1(role='navigation')
     .nav-wrapper
-      a#logo-container.brand-logo(href='/') scatpod
-      
+      form#search.hide
+        .input-field
+          input.white-text.red.darken-4(autofocus type='search')
+
       ul.right.hide-on-med-and-down
-        li: a(href='/search'): i.mdi-action-search
         li: a.modal-trigger(href='#modal-add'): i.mdi-content-add
-        li
-          a.dropdown-button(
-            data-activates='user-menu'
-            href='#'
-          ): i.mdi-action-account-circle
-      
+        li: a.dropdown-button(data-activates='user-menu' href='#'): i.mdi-action-account-circle
+
+      ul#send.right
+        li.search
+          a.white-text.waves-effect.waves-light(href='#')
+            i.mdi-action-search.right
+            span.term #{term}
+
       ul#user-menu.dropdown-content
         li: a(href='#!') Profile
         li: a(href='#!') Settings
         li.divider
         li: a(href='#!') Logout
-      
-      ul#nav-mobile.side-nav
+
+      ul#mobile-nav.side-nav
         li: a(href='#')
           i.mdi-image-blur_on.left
           | Search
-        
-        li: a(href='#')
+
+        li: a.modal-trigger(href='#modal-add')
           i.mdi-content-add.left
           | Add
-      
+
         li: .divider
-        
+
         li: a(href='#')
           i.mdi-action-settings.left
           | Settings
-      
-      a.button-collapse(
-        data-activates='nav-mobile'
+
+      //- a#brand.brand-logo.white-text(href='#') scatpod
+
+      a#burger.button-collapse.white-text(
+        data-activates='mobile-nav'
         href='#'
       ): i.mdi-navigation-menu

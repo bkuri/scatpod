@@ -1,5 +1,18 @@
 // Materialize stylesheet override
 
+@media only screen and (max-width: 992px)
+  .parallax-container .section
+    position absolute
+    top 40%
+
+  #index-banner .section
+    top 10%
+
+
+@media only screen and (max-width: 600px)
+  #index-banner .section
+    top 0
+
 /*
 footer.page-footer
   margin 0
@@ -41,13 +54,20 @@ footer.page-footer
   .modal-content
     padding 12px
 
+
+body
+  -webkit-touch-callout none
+  background-color white
+  user-select none
+
+
+html
+  touch-action manipulation
+
+
 nav ul a,
 nav .brand-logo
   color #444
-
-
-body
-  background-color white
 
 
 p
@@ -79,21 +99,3 @@ p
   cursor default
   line-height 1.1rem
   user-select none
-
-
-@media only screen and (max-width: 992px)
-  .parallax-container .section
-    position absolute
-    top 40%
-
-  #index-banner .section
-    top 10%
-
-
-@media only screen and (max-width: 600px)
-  #index-banner .section
-    top 0
-
-  #fab
-    right 15px
-    z-index 1979

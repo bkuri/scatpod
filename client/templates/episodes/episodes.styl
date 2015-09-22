@@ -1,8 +1,23 @@
+#details,
 #episodes
+  max-height inherit
+  overflow hidden
+
+  canvas#bg
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    z-index 1
+
   h4
     font-weight 300
     line-height 0.8
     margin 0
+    position relative
+    text-shadow 0 0 10px black
+    z-index 2
 
   h5
     line-height 0.9
@@ -10,7 +25,14 @@
 
   h6
     margin-top 0
-
+  /*
+  img.background
+    filter blur(60px)
+    left 0
+    position fixed
+    top 0
+    transform translate3d(0,0,0)
+  */
   p
     line-height 1.1rem
 
@@ -18,6 +40,8 @@
     min-height 50px
     padding-left 10px
     padding-right 50px
+    position relative
+    z-index 2
 
     a[class^=queue]
       border-style solid

@@ -1,19 +1,41 @@
 html(lang='en')
   head
     meta(
-      content='text/html; charset=UTF-8'
-      http-equiv='Content-Type'
+      name='apple-mobile-web-app-capable'
+      content='yes'
     )
     
     meta(
-      content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no'
+      name='apple-mobile-web-app-title'
+      content='scatpod'
+    )
+    
+    meta(
+      name='application-name'
+      content='scatpod'
+    )
+    
+    meta(
+      name='mobile-web-app-capable'
+      content='yes'
+    )
+    
+    meta(
+      http-equiv='Content-Type'
+      content='text/html; charset=UTF-8'
+    )
+    
+    meta(
       name='viewport'
+      content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
     )
 
     title scatpod
+    
+    link(rel='manifest' href='manifest.webmanifest')
 
     //- CSS
-    //- link(href='https://fonts.googleapis.com/icon?family=Material+Icons' type='text/css' rel='stylesheet' media='screen,projection')
+    //- link(href='https://fonts.googleapis.com/icon?family=Material+Icons' media='screen,projection' rel='stylesheet' type='text/css')
     //- link(href='css/materialize.css' type='text/css' rel='stylesheet' media='screen,projection')
     //- link(href='css/style.css' type='text/css' rel='stylesheet' media='screen,projection')
     //- link(href='bower_components/polymer/polymer.html' rel='import')

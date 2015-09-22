@@ -1,14 +1,11 @@
+Template.details.helpers
+  bg: (url) ->
+    decodeURIComponent url
+
+
 Template.episodes.helpers
   isEpisodeQueued: (url) ->
     url in Template.instance().queued()
-
-
-  list: ->
-    (Session.get 'podcast').list
-
-
-  name: ->
-    (Session.get 'podcast').name
 
 
   tracking: ->

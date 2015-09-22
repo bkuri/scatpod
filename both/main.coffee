@@ -187,8 +187,8 @@ UserSchema = new SimpleSchema
     type: [new SimpleSchema [PodcastSchema, TimeStampFields]]
 
 
-Networks = new Mongo.Collection 'networks'
+@Networks = new Mongo.Collection 'networks'
 
 
 # Meteor.users.attachSchema UserSchema
-Networks.attachSchema NetworkSchema
+@Networks.attachSchema NetworkSchema

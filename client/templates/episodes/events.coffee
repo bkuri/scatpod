@@ -1,3 +1,9 @@
+Template.details.events
+  'click a.btn-large': (event) ->
+    event.preventDefault()
+    history.back()
+
+
 Template.episodes.events
   'click a': (event) ->
     event.preventDefault()
@@ -18,7 +24,7 @@ Template.episodes.events
         .removeClass('queue').addClass('queued').next('i')
         .removeClass('mdi-content-add white-text').addClass 'mdi-content-remove black-text'
 
-      $('a:not(.r)', '#fab').removeClass 'disabled'
+      # $('a:not(.r)', '#fab').removeClass 'disabled'
 
 
   'click a.queued': (event) ->
