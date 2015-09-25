@@ -1,16 +1,50 @@
-#details(data-id='#{cid}')
+#details
   .container
-    canvas#bg(
-      data-img='{{bg img}}'
-      height='200'
-      width='200'
-    )
+    .row.toolbar
+      .col.s4
+        a.btn-flat.waves-effect.waves-white.white-text.btn-back(href='#')
+          i.white-text.mdi-navigation-arrow-back
+          span Back
 
-    .row
-      a.btn-flat.waves-effect.waves-teal.right(href='#')
-        i.mdi-navigation-close.right
-        | Close
+      .col.s4
+        a.btn-flat.waves-effect.waves-white.white-text.btn-play(href='#')
+          i.white-text.mdi-av-play-arrow
+          span Sample
 
-    .row
-      .col.l10.m12.s12.offset-l1
-        +episodes
+      .col.s4
+        if isTracking cid
+          a.btn-flat.waves-effect.waves-white.white-text.btn-leave(href='#')
+            i.white-text.mdi-content-remove
+            span Remove
+        else
+          a.btn-flat.waves-effect.waves-white.white-text.btn-join(href='#')
+            i.white-text.mdi-content-add
+            span Add
+
+    .row.summary
+      .col.s4
+        img(src=img)
+
+      .col.s8
+        h4.white-text= title
+
+        .labels
+          if isExplicit collectionExplicitness
+            span.label.red.white-text explicit
+          each genres
+            span.label.white.black-text= this
+
+    .row.blurb
+      .col.s12
+        ul.collapsible(data-collapsible='accordion')
+          each accordionElements
+            li
+              .collapsible-header.white-text.waves-effect.waves-white
+                i($dyn=icon)
+                | #{title}
+
+              .collapsible-body
+                p.white-text= body
+
+    .row.list
+      +episodes

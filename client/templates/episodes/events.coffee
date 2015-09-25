@@ -1,7 +1,44 @@
 Template.details.events
-  'click a.btn-large': (event) ->
+  'click a': (event) ->
     event.preventDefault()
+    $(event.currentTarget).addClass 'disabled'
+
+
+  'click a.btn-back': (event) ->
     history.back()
+
+
+  'click a.btn-leave': (event) ->
+    {cid} = (Session.get 'podcast')
+
+    unless cid in (Session.get 'tracking')
+      Materialize.toast 'Podcast not found in tracking list', 1000
+      return
+
+    Meteor.call 'podcastRemove', cid, (error, response) ->
+      $(event.currentTarget).removeClass 'disabled'
+      return if error?
+
+      Meteor.setTimeout ->
+        Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+        Materialize.toast 'Unsubscribed from podcast', 1000
+      , 751
+
+
+  'click a.btn-join': (event) ->
+    data = (Session.get 'podcast')
+    meta = (Details.findOne Router.current().params.url)
+    meta = (_.omit meta, ['description', 'info', 'link', 'owner'])
+    data = _.extend data, {meta}
+
+    Meteor.call 'podcastAdd', data, (error, response) ->
+      $(event.currentTarget).removeClass 'disabled'
+      return if error?
+
+      Meteor.setTimeout ->
+        Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+        Materialize.toast 'Subscribed to podcast', 1000
+      , 751
 
 
 Template.episodes.events

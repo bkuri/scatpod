@@ -39,6 +39,30 @@ nav a.button-collapse
   position absolute
 
 
+.label
+  border-radius 2px
+  display inline-block
+  // float left
+  font-size 0.6rem
+  font-weight 500
+  line-height 1
+  padding 4px 4px 3px 4px
+  text-transform uppercase
+  vertical-align baseline
+
+  &.red
+    margin-right -1px !important
+
+
+.label:not(:last-child),
+.label:not(.red)
+  margin-right 2px
+
+
+.labels
+  pointer-events none
+
+
 .hyphenate
   overflow-wrap break-word
   word-wrap break-word

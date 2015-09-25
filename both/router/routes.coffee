@@ -8,18 +8,28 @@ Router.route '/',
   template: 'home'
 
 
-Router.route '/details/:cid/:img/:url',
-  data: ->
-    _.extend cid: @params.cid, img: @params.img, (Details.findOne @params.url)
-
+Router.route '/details/:url',
+  data: -> (Details.findOne @params.url)
   name: 'details'
   template: 'details'
   waitOn: -> (Meteor.subscribe 'details', @params.url)
 
 
+Router.route '/exit',
+  template: 'loading'
+
+  onBeforeAction: ->
+    Meteor.logout()
+    @next()
+
+  onAfterAction: ->
+    Router.go 'home'
+
+
 Router.route '/search/:term',
   name: 'search'
   notFoundTemplate: 'noResults'
+  template: 'search'
 
   onAfterAction: ->
     $('body,html').scrollTop 0
@@ -31,10 +41,10 @@ Router.route '/search/:term',
     $('span.term', '#send').css fontStyle: 'italic'
     @next()
 
-  template: 'search'
   waitOn: ->
     try
       (Meteor.subscribe 'search', @params.term)
+
     catch error
       console.error error
 

@@ -101,10 +101,16 @@ Meteor.methods
     @unblock()
     (Meteor.wrapAsync getFeed) url
 
+  ###
+  'fetchImage': (url) ->
+    @unblock()
+    (HTTP.get url, responseType: 'arraybuffer').content
+  ###
+
   'podcastAdd': (data) ->
     podcast =
-      _id: data.id
-      categories: data.genres or []
+      _id: data.cid
+      categories: data.cat or []
       copyright: (getCopyright data.meta)
       # episodes: (getEpisodes data.meta)
       explicit: (getExplicit data.meta)

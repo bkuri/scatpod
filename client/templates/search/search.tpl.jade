@@ -7,10 +7,10 @@ if smallScreen
         ul.collection
           each results
             li.new.collection-item-avatar(
-              data-id='#{collectionId}'
-              data-img='#{artworkUrl600}'
-              data-feed='#{feedUrl}'
-              data-genres='#{genres}'
+              data-cat=genres
+              data-cid=collectionId
+              data-img=artworkUrl600
+              data-url=feedUrl
             )
               a.black-text.primary-content.waves-effect(href='#')
                 if isTracking collectionId
@@ -23,9 +23,9 @@ if smallScreen
                   strong {{truncate artistName 34}}
                   br
                   if isExplicit collectionExplicitness
-                    span.label.red explicit
+                    span.label.red.white-text explicit
                   each labelize genres
-                    span.label.grey.darken-1 #{this}
+                    span.label.grey.darken-1.white-text #{this}
 
 else
   +episodesModal
@@ -45,14 +45,14 @@ else
           each results
             +masonryElement('grid')
               .card.small.hoverable(
-                data-id='#{collectionId}'
-                data-feed='#{feedUrl}'
-                data-genres='#{genres}'
+                data-id=collectionId
+                data-feed=feedUrl
+                data-genres=genres
               )
                 div($dyn=imbg)
                   img(
                     src=artworkUrl600
-                    title='#{collectionName}'
+                    title=collectionName
                   )
 
                 .card-content.activator

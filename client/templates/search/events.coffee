@@ -45,7 +45,7 @@ Template.search.events
 
 
   'click span.tools > a.join': (event, template) ->
-    $a = $(event.target).parent()
+    $a = $(event.currentTarget)
     data = ($a.parents '.card').data()
 
     # console.log JSON.stringify data
@@ -71,11 +71,11 @@ Template.search.events
 
     Meteor.call 'podcastRemove', id, (error, response) ->
       return if error?
-      $desc = $a.parent()
+      # $desc = $a.parent()
       Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
 
       Meteor.setTimeout ->
-        $('a.join.disabled', $p).removeClass 'disabled'
+        # $('a.join.disabled', $p).removeClass 'disabled'
         Materialize.toast 'Unsubscribed from podcast', 1000
       , 100
 
@@ -83,7 +83,8 @@ Template.search.events
   'click ul.collection a.primary-content': (event, template) ->
     data = $(event.currentTarget).parents('li').data()
 
-    Router.go 'details', cid: data.id, img: (encodeURIComponent data.img), url: (encodeURIComponent data.feed)
+    Session.set 'podcast', (_.omit data, 'url', 'velocity')
+    Router.go 'details', url: (encodeURIComponent data.url)
     event.preventDefault()
 
 

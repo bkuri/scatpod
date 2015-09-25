@@ -1,23 +1,7 @@
-Meteor.startup ->
-  # Add Facebook configuration entry
-  ServiceConfiguration.configurations.update(
-    {service: 'facebook'}
-    {
-      $set:
-        appId: 'XXXXXXXXXXXXXXX'
-        secret: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-    }
-    {upsert: true}
-  )
+configureService = (service, client, secret) ->
+  ServiceConfiguration.configurations.upsert {service}, $set: _.extend client, {secret}
 
-  # Add Google configuration entry
-  ServiceConfiguration.configurations.update(
-    {service: 'google'}
-    {
-      $set:
-        clientId: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-        client_email: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-        secret: 'XXXXXXXXXXXXXXXXXXXXXXXX'
-    }
-    {upsert: true}
-  )
+Meteor.startup ->
+  configureService 'facebook', appId: 'XXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+  configureService 'google', clientId: 'XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com', 'XXXXXXXXXXXXXXXXX-XXXXXX'
+  configureService 'twitter', consumerKey: 'XXXXXXXXXXXXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'

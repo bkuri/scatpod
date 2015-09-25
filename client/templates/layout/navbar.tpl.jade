@@ -22,21 +22,27 @@
         li: a(href='#!') Logout
 
       ul#mobile-nav.side-nav
-        li: a(href='#')
-          i.mdi-image-blur_on.left
-          | Search
+        li: a(href='{{pathFor route="home"}}')
+          i.mdi-action-home.left
+          | Home
 
         li: a.modal-trigger(href='#modal-add')
           i.mdi-content-add.left
-          | Add
-
-        li: .divider
+          | Add more podcasts
 
         li: a(href='#')
           i.mdi-action-settings.left
           | Settings
 
-      //- a#brand.brand-logo.white-text(href='#') scatpod
+        li: a(href='#')
+          i.mdi-action-help.left
+          | Help
+
+        li: .divider
+
+        li: a.modal-trigger(href='#modal-exit')
+          i.mdi-action-exit-to-app.left
+          | Log out
 
       a#burger.button-collapse.white-text(
         data-activates='mobile-nav'

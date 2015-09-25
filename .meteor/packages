@@ -22,8 +22,6 @@ accounts-password
 dburles:collection-helpers
 zimme:active-route
 mquandalle:moment
-
-
 peerlibrary:xml2js
 brentjanderson:buzz
 dburles:mongo-collection-instances
@@ -39,3 +37,6 @@ fastclick
 meteorhacks:fast-render
 reactive-var
 voodoohop:masonrify
+percolate:velocityjs
+aldeed:http
+u2622:persistent-session

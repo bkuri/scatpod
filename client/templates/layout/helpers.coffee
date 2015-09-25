@@ -1,11 +1,3 @@
 Template.navbar.helpers
-  name: ->
-    'scatpod'
-
-
-  term: ->
-    Router.current().params.term or 'scatpod'
-
-
-  searching: ->
-    $('#search').hasClass 'hide'
+  searching: -> $('#search').hasClass 'hide'
+  term: -> Router.current().params.term or window.name
