@@ -2,6 +2,7 @@ Router.route '/',
   name: 'home'
 
   onBeforeAction: ->
+    $('.button-collapse', 'nav').sideNav 'hide'
     $('span.term', '#send').css fontStyle: 'normal'
     @next()
 
@@ -19,6 +20,7 @@ Router.route '/exit',
   template: 'loading'
 
   onBeforeAction: ->
+    $('.button-collapse', 'nav').sideNav 'hide'
     Meteor.logout()
     @next()
 
