@@ -1,2 +1,2 @@
+server/lib/config
 config/settings.json
-lib/config/accounts.coffee
