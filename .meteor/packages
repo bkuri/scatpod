@@ -4,39 +4,56 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
-mquandalle:jade
-coffeescript
-mquandalle:stylus
-iron:router
-fortawesome:fontawesome
-aldeed:simple-schema
-http
-materialize:materialize
-aldeed:collection2
-aldeed:autoform
-gildaspk:autoform-materialize
-useraccounts:materialize
-accounts-password
-dburles:collection-helpers
-zimme:active-route
-mquandalle:moment
-peerlibrary:xml2js
-brentjanderson:buzz
-dburles:mongo-collection-instances
-ongoworks:security
-alanning:roles
+meteor-base             # Packages every Meteor app needs to have
+mobile-experience       # Packages for a great mobile UX
+mongo                   # The database Meteor supports right now
+blaze-html-templates    # Compile .html files into Meteor Blaze views
+session                 # Client-side reactive dictionary for your app
+jquery                  # Helpful client-side library
+tracker                 # Meteor's client-side reactive programming library
+
+standard-minifiers      # JS/CSS minifiers run for production mode
+es5-shim                # ECMAScript 5 compatibility for older browsers.
+ecmascript              # Enable ECMAScript2015+ syntax in app code
+
+meteor
+webapp
+logging
+deps
+ddp
+livedata
+blaze
+ui
+spacebars
+templating
+check
+underscore
+random
+ejson
 accounts-facebook
-accounts-twitter
 accounts-google
-softwarerero:accounts-t9n
-useraccounts:iron-routing
-service-configuration
+accounts-password
+accounts-twitter
+aldeed:autoform
+aldeed:collection2
+aldeed:simple-schema
+brentjanderson:buzz
+coffeescript
 fastclick
-meteorhacks:fast-render
-reactive-var
-voodoohop:masonrify
+gildaspk:autoform-materialize
+http
+iron:router
+materialize:materialize
+mquandalle:jade
+mquandalle:moment
+mquandalle:stylus
+peerlibrary:xml2js
 percolate:velocityjs
-aldeed:http
-u2622:persistent-session
+reactive-var
+robodo:masonrify
+useraccounts:materialize
+zimme:active-route
+accounts-base
+service-configuration
+useraccounts:iron-routing
 meteorhacks:ssr
