@@ -4,7 +4,11 @@ Router.configure
   notFoundTemplate: 'not_found'
 
 
-Router.plugin 'ensureSignedIn', only: ['search']
+Router.plugin 'ensureSignedIn',
+  only: [
+    'search'
+    'settings'
+  ]
 
 
 AccountsTemplates.configure

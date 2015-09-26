@@ -22,7 +22,7 @@ Template.details.events
       Meteor.setTimeout ->
         Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
         Materialize.toast 'Unsubscribed from podcast', 1000
-      , 751
+      , 300
 
 
   'click a.btn-join': (event) ->
@@ -38,7 +38,7 @@ Template.details.events
       Meteor.setTimeout ->
         Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
         Materialize.toast 'Subscribed to podcast', 1000
-      , 751
+      , 300
 
 
 Template.episodes.events

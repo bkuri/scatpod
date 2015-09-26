@@ -18,8 +18,10 @@
       ul#user-menu.dropdown-content
         li: a(href='#!') Profile
         li: a(href='#!') Settings
-        li.divider
-        li: a(href='#!') Logout
+
+        if recognized
+          li.divider
+          li: a(href='#!') Logout
 
       ul#mobile-nav.side-nav
         li: a(href='{{pathFor route="home"}}')
@@ -30,7 +32,7 @@
           i.mdi-content-add.left
           | Add more podcasts
 
-        li: a(href='#')
+        li: a(href='{{pathFor route="settings"}}')
           i.mdi-action-settings.left
           | Settings
 
@@ -38,11 +40,12 @@
           i.mdi-action-help.left
           | Help
 
-        li: .divider
+        if recognized
+          li: .divider
 
-        li: a.modal-trigger(href='#modal-exit')
-          i.mdi-action-exit-to-app.left
-          | Log out
+          li: a.modal-trigger(href='#modal-exit')
+            i.mdi-action-exit-to-app.left
+            | Log out
 
       a#burger.button-collapse.white-text(
         data-activates='mobile-nav'

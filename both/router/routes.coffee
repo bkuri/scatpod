@@ -1,37 +1,34 @@
-Router.route '/',
-  name: 'home'
+Router.route 'home',
+  path: '/'
 
   onBeforeAction: ->
     $('.button-collapse', 'nav').sideNav 'hide'
     $('span.term', '#send').css fontStyle: 'normal'
     @next()
 
-  template: 'home'
 
-
-Router.route '/details/:url',
+Router.route 'details',
   data: -> (Details.findOne @params.url)
-  name: 'details'
-  template: 'details'
+  path: '/details/:url',
   waitOn: -> (Meteor.subscribe 'details', @params.url)
 
 
-Router.route '/exit',
+Router.route 'exit',
+  path: '/exit'
   template: 'loading'
+
+  onAfterAction: ->
+    Router.go 'home'
 
   onBeforeAction: ->
     $('.button-collapse', 'nav').sideNav 'hide'
     Meteor.logout()
     @next()
 
-  onAfterAction: ->
-    Router.go 'home'
 
-
-Router.route '/search/:term',
-  name: 'search'
+Router.route 'search',
   notFoundTemplate: 'noResults'
-  template: 'search'
+  path: '/search/:term'
 
   onAfterAction: ->
     $('body,html').scrollTop 0
@@ -51,6 +48,10 @@ Router.route '/search/:term',
       console.error error
 
 
-# Router.route '/settings', -> @render 'Settings'
+Router.route 'settings',
+  path: '/settings'
+  waitOn: -> (Meteor.subscribe 'userData')
+
+
 # Router.route '/tracking', -> @render 'TrackingList'
 # Router.route '/tracking/:id', -> @render 'PodcastDetails', data: -> (Tracking.findOne id: @params.id)

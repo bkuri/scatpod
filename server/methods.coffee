@@ -89,25 +89,40 @@ getSummary = (p) ->
 
 
 Meteor.methods
-  'episodeAdd': (track, name='main') ->
+  emailSend: (data) ->
+    check data, email: String, name: String
+
+    from = 'robot@scatpod.xyz'
+    html = (SSR.render 'welcome', data)
+    subject = 'Welcome to scatpod'
+    to = data.email
+
+    @unblock()
+    console.log html
+    Email.send {to, from, subject, html}
+
+
+  episodeAdd: (track, name='main') ->
     find = _id: Meteor.userId(), 'profile.playlists.name': name
     Meteor.users.update find, $push: 'profile.playlists.$.tracks': track
 
-  'episodeRemove': (track, name='main') ->
+
+  episodeRemove: (track, name='main') ->
     find = _id: Meteor.userId(), 'profile.playlists.name': name
     Meteor.users.update find, $pull: 'profile.playlists.$.tracks': track
 
-  'getFeed': (url) ->
+
+  getFeed: (url) ->
     @unblock()
     (Meteor.wrapAsync getFeed) url
 
   ###
-  'fetchImage': (url) ->
+  fetchImage: (url) ->
     @unblock()
     (HTTP.get url, responseType: 'arraybuffer').content
   ###
 
-  'podcastAdd': (data) ->
+  podcastAdd: (data) ->
     podcast =
       _id: data.cid
       categories: data.cat or []
@@ -121,19 +136,21 @@ Meteor.methods
       thumbnail: (getImage data.meta)
       url: (getLink data.meta)
 
+    @unblock()
     Meteor.users.update {_id: Meteor.userId()}, $push: 'profile.podcasts': podcast
 
-  'podcastRemove': (_id) ->
+
+  podcastRemove: (_id) ->
     userid = _id: Meteor.userId()
     # TODO remove episodes with parent === _id
     # Meteor.users.update userid, $pull: 'profile.playlists': 'tracks.parent': $eq: _id, {multi: yes}
     Meteor.users.update userid, $pull: 'profile.podcasts': {_id}
 
-  'podcastSearch': (term) ->
-    @unblock()
 
+  podcastSearch: (term) ->
     params = _.extend {term},
       entity: 'podcast'
       limit: 200
 
+    @unblock()
     (Meteor.wrapAsync apiCall) 'https://itunes.apple.com/search', params

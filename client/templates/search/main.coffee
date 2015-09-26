@@ -36,7 +36,7 @@ Template.search.rendered = ->
         tmp.limit.set (tmp.limit.get() + 40)
 
         clearTimeout tid?
-        tid = setTimeout -> $('.new', 'ul.collection').process()
+        tid = Meteor.setTimeout -> $('.new', 'ul.collection').process()
 
       , 300
 

@@ -3,23 +3,27 @@
     .row.toolbar
       .col.s4
         a.btn-flat.waves-effect.waves-white.white-text.btn-back(href='#')
-          i.white-text.mdi-navigation-arrow-back
-          span Back
+          span
+            i.white-text.mdi-navigation-arrow-back
+            | Back
 
       .col.s4
         a.btn-flat.waves-effect.waves-white.white-text.btn-play(href='#')
-          i.white-text.mdi-av-play-arrow
-          span Sample
+          span
+            i.white-text.mdi-av-play-arrow
+            | Sample
 
       .col.s4
         if isTracking cid
           a.btn-flat.waves-effect.waves-white.white-text.btn-leave(href='#')
-            i.white-text.mdi-content-remove
-            span Remove
+            span.right
+              i.white-text.mdi-content-remove
+              | Remove
         else
           a.btn-flat.waves-effect.waves-white.white-text.btn-join(href='#')
-            i.white-text.mdi-content-add
-            span Add
+            span.right
+              i.white-text.mdi-content-add
+              | Add
 
     .row.summary
       .col.s4

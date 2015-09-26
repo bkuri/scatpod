@@ -1,5 +1,25 @@
+determineEmail = (user) ->
+  return switch
+    when user.services?
+      services = (_.keys user.services)
+      if ('facebook' in services) then user.services.facebook.email
+      else if ('google' in services) then user.services.google.email
+      else null
+    when user.emails? then user.emails[0].address
+    else null
+
+
 Accounts.onCreateUser (options, user) ->
-  _.extend user, profile: playlist: 'main', playlists: [name: 'main', tracks: []], podcasts: [], settings: {}
+  data =
+    email: (determineEmail user)
+    name: options.profile?.name or ''
+
+  if data.email? then Meteor.call 'emailSend', data, (error) ->
+    (console.error error) if error?
+
+  profile = playlist: 'main', playlists: [name: 'main', tracks: []], podcasts: [], settings: {}
+  profile = (_.extend profile, options.profile) if options.profile?
+  _.extend user, {profile}
 
 
 Meteor.publish 'details', (url) ->
@@ -20,3 +40,18 @@ Meteor.publish 'search', (term) ->
       @added 'search', term, result.results
       @ready()
     else @ready()
+
+
+Meteor.publish 'userData', ->
+  _id = @userId
+  return @ready() unless _id?
+
+  Meteor.users.find {_id},
+    fields:
+      'services.facebook.email': 1
+      'services.google.email': 1
+      'services.twitter.screenName': 1
+      'emails.address[0]': 1
+      'profile': 1
+
+SSR.compileTemplate 'welcome', (Assets.getText 'templates/welcome.html')

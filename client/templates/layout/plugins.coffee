@@ -32,7 +32,7 @@ $.fn.hideQuery = ->
 
     else
       clearInterval iid
-      setTimeout restore, 200
+      Meteor.setTimeout restore, 200
   , 0
 
 
