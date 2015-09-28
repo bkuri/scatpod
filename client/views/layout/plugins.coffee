@@ -40,3 +40,11 @@ $.fn.reset = ->
   $(@)
     .removeClass 'searching'
     .find('span.term').removeClass('hide')
+
+
+$.fn.theme = (color1, color2) ->
+  $(@)
+    #.find('.label:not(.red)').css(backgroundColor: color2).end()
+    .find('.queue').css(borderColor: "transparent #{color2} transparent transparent").end()
+    # .find('.mdi-content-add').css color: color1
+    .end()

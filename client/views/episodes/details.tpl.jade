@@ -1,5 +1,5 @@
 #details
-  .container
+  .container-fluid
     .row.toolbar
       .col.s4
         a.btn-flat.waves-effect.waves-white.white-text.btn-back(href='#')
@@ -25,9 +25,10 @@
               i.white-text.mdi-content-add
               | Add
 
+  .container
     .row.summary
       .col.s4
-        img(src=img)
+        img#thumb
 
       .col.s8
         h4.white-text= title
@@ -50,5 +51,6 @@
               .collapsible-body
                 p.white-text= body
 
+  .container-fluid
     .row.list
       +episodes

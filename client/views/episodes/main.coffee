@@ -1,11 +1,20 @@
 Template.details.rendered = ->
   @autorun _.bind ->
-    template = Template.instance()
-
     Deps.afterFlush ->
-      $('#details').bokeh()
-      $('.collapsible').collapsible()
+      $('body')
+        .on 'loaded', (event, main, complement='#fff') ->
 
+          # console.log main, backgroundColor
+          $(@)
+            .off 'loaded'
+            .theme main, complement
+
+          Meteor.setTimeout ->
+            $('#details').css backgroundColor: 'rgba(34,34,34,0)'
+          , 1000
+        .bokeh hue: (Session.get 'podcast').img, img: '#thumb'
+
+      $('.collapsible').collapsible()
   , this
 
 

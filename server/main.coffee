@@ -2,9 +2,11 @@ determineEmail = (user) ->
   return switch
     when user.services?
       services = (_.keys user.services)
+
       if ('facebook' in services) then user.services.facebook.email
       else if ('google' in services) then user.services.google.email
       else null
+
     when user.emails? then user.emails[0].address
     else null
 
@@ -53,5 +55,6 @@ Meteor.publish 'userData', ->
       'services.twitter.screenName': 1
       'emails.address[0]': 1
       'profile': 1
+
 
 SSR.compileTemplate 'welcome', (Assets.getText 'templates/welcome.html')

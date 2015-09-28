@@ -46,6 +46,7 @@ getFeed = (url, callback) ->
           explicitArray: no
           tagNameProcessors: [xml2js.processors.stripPrefix]
 
+        # TODO: consider filtering usless stuff before sending it over the wire
         callback null, xml.rss.channel
 
       catch error

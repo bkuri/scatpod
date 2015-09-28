@@ -12,12 +12,14 @@
     // z-index 1
 
   h4
-    line-height 0.8
+    line-height 0.9
     margin 0
     // text-shadow 0 0 10px black
     // z-index 2
 
   h5
+    font-size 1.5rem
+    font-weight 500
     line-height 0.9
     margin 0
 
@@ -35,24 +37,22 @@
     line-height 1.1rem
 
   li.collection-item
+    border none
+    margin-bottom 0.25rem
     min-height 50px
-    padding-left 10px
+    opacity 0.7
+    padding-left 1rem
     padding-right 50px
     position relative
     z-index 2
 
     a[class^=queue]
+      border-color transparent white transparent transparent
       border-style solid
       border-width 0 35px 35px 0
       position absolute
       right 4px
       top 4px
-
-      &.queue
-        border-color transparent #F44336 transparent transparent
-
-      &.queued
-        border-color transparent #AEEA00 transparent transparent
 
       & + i
         font-size 1.2rem
@@ -62,9 +62,13 @@
         right 6px
         top 4px
 
+  ul.collection
+    border none
+
 
 #details
   background-color #222
+  transition background 0.5s ease-out
 
   h4
     // border-bottom thin solid rgba(255, 255, 255, 0.5)
@@ -80,10 +84,7 @@
   img
     max-width 100%
     position relative
-
-  ul.collection
-    border-radius 3px
-    margin 1rem 0
+    width 100%
 
   ul.collapsible
     border none
@@ -120,6 +121,10 @@
           text-align right
           width 8px
 
+  ul.collection
+    border-radius 3px
+    margin 1rem 0
+
   .blurb .col
     padding 0
 
@@ -134,22 +139,23 @@
   .container
     width 85%
 
-    > .row
+    > .row:last-child
       margin-bottom 1rem
 
-      &:last-child
-        margin-bottom 1rem
+  .label
+    opacity 0.7
 
   .labels
     margin-top 0.25rem
     position relative
 
-  .summary
-    border-bottom thin solid rgba(255, 255, 255, 0.5)
-    padding-bottom 0.5rem
+  .row
+    margin-bottom 0
 
-    .row
-      margin-bottom 0
+  .summary
+    border-top thin solid rgba(255, 255, 255, 0.5)
+    border-bottom thin solid rgba(255, 255, 255, 0.5)
+    padding 1rem 0 0.5rem 0
 
     .s4
       padding 0
@@ -159,7 +165,7 @@
       padding-right 0
 
   .toolbar
-    border-bottom thin solid rgba(255, 255, 255, 0.5)
+    // border-bottom thin solid rgba(255, 255, 255, 0.5)
 
     .col
       padding 0
@@ -172,7 +178,14 @@
         width 6rem
 
     a
+      border-radius 0
       padding 0
+
+      &:first-child
+        padding-left 1rem
+
+      &:last-child
+        padding-right 1rem
 
       i
         font-size 1rem

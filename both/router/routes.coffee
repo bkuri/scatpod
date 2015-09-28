@@ -37,6 +37,7 @@ Router.route 'search',
       $('li.new', 'ul.collection').process()
 
   onBeforeAction: ->
+    $('body').css backgroundImage: 'none'
     $('span.term', '#send').css fontStyle: 'italic'
     @next()
 
