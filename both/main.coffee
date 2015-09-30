@@ -132,13 +132,6 @@ NetworkSchema = new SimpleSchema
     type: String
 
 
-SettingsSchema = new SimpleSchema
-  language:
-    defaultValue: 'en'
-    optional: yes
-    type: String
-
-
 TimeStampFields =
   added:
     autoValue: ->
@@ -175,8 +168,9 @@ UserSchema = new SimpleSchema
     type: String
 
   'profile.settings':
+    defaultValue: []
     optional: yes
-    type: SettingsSchema
+    type: [Object]
 
   'profile.$.playlists':
     optional: yes

@@ -3,6 +3,8 @@
   right 40px
 
 #results
+  background-color #222
+
   // mobile devices (single column)
   @media screen and (max-width: 600px)
     .card-title
@@ -63,7 +65,7 @@
 
 
   .collection-item-avatar
-    border-bottom 1px solid #e0e0e0
+    // border-bottom 1px solid #e0e0e0
     height 75px
     margin -5px 0 5px
     max-height 75px
@@ -107,6 +109,8 @@
       font-size smaller
 
     .thumb
+      background-blend-mode luminosity
+      background-size cover
       border 2px solid black
       border-radius 3px
       display table-cell
@@ -115,6 +119,9 @@
       margin 0 auto
       vertical-align middle
       width 64px
+
+      &:hover
+        background-color transparent !important
 
 
   .label

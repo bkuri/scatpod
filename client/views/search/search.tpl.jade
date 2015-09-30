@@ -6,26 +6,26 @@ if smallScreen
       .col.l10.m12.s12.offset-l1
         ul.collection
           each results
-            li.new.collection-item-avatar(
+            li.new.collection-item-avatar.grey.darken-4.white-text(
               data-cat=genres
               data-cid=collectionId
               data-img=artworkUrl600
               data-url=feedUrl
             )
-              a.black-text.primary-content.waves-effect(href='#')
+              a.white-text.primary-content.waves-effect.waves-red.waves-light(href='#')
                 if isTracking collectionId
-                  a.disabled.black-text.secondary-content.untrack(href='#'): i.small.mdi-content-remove-circle
+                  a.disabled.white-text.secondary-content.untrack(href='#'): i.small.white-text.mdi-content-remove-circle
                 else
-                  a.disabled.black-text.secondary-content.join(href='#'): i.small.mdi-content-add-circle
-                .thumb: img(src=artworkUrl60)
+                  a.disabled.white-text.secondary-content.join(href='#'): i.small.white-text.mdi-content-add-circle
+                .thumb(style="background: url(#{artworkUrl60}) no-repeat center hsl(200,50%,50%)")
                 p
                   h6 {{truncate collectionCensoredName 54}}
                   strong {{truncate artistName 34}}
                   br
                   if isExplicit collectionExplicitness
-                    span.label.red.white-text explicit
+                    span.label.red.black-text explicit
                   each labelize genres
-                    span.label.grey.darken-1.white-text #{this}
+                    span.label.white.black-text #{this}
 
 else
   +episodesModal
