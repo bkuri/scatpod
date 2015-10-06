@@ -92,31 +92,31 @@
     return value
 
 
-  process = (canvas, options, hue) ->
+  process = (canvas, options) ->
     context = (canvas.getContext '2d')
     maxRadius = options.maxRadius or Math.min(canvas.width, canvas.height) / 2
     minRadius = options.minRadius or (maxRadius / 2)
+    hue = options.hue or (Math.random() * 240)
     opts = $.extend({hue, minRadius, maxRadius}, $.fn.bokeh.defaults, options)
     total = unless opts.total? then Math.round((canvas.width * canvas.height) / 30000) else opts.total
 
     context.fillStyle = opts.bg
     context.fillRect 0, 0, canvas.width, canvas.height
-    (console.log total, opts.minRadius, opts.maxRadius, hue) if opts.log
+    (console.log total, opts.minRadius, opts.maxRadius, opts.hue) if opts.log
 
     for i in [0..total]
       context.beginPath()
 
-      # h = hue + (Math.random() * 120)
+      h = opts.hue + (Math.random() * 30)
       s = 20 + (Math.random() * 60)
       l = 10 + (Math.random() * 40)
       a = 0.25 + (Math.random() * 0.55)
-
-      context.fillStyle = "hsla(#{hue}, #{s}%, #{l}%, #{a})"
 
       x = Math.floor(Math.random() * canvas.width)
       y = Math.floor(Math.random() * canvas.height)
       r = Math.floor(Math.random() * (opts.maxRadius - opts.minRadius)) + opts.minRadius
 
+      context.fillStyle = "hsla(#{h}, #{s}%, #{l}%, #{a})"
       context.arc x, y, r, 0, (Math.PI * 2), yes
       context.fill()
 
@@ -126,7 +126,7 @@
 
     catch error
       console.error error
-      'background-color': "hsl(#{hue}%, 15%, 20%)"
+      'background-color': "hsl(#{opts.hue}%, 15%, 20%)"
 
 
   $.fn.bokeh = (options={}) ->
@@ -140,19 +140,22 @@
 
       img.onload = (e) ->
         avg = (average img)
-        color = ["##{hex avg}", "##{complement hex avg}"]
+        colors = ["##{hex avg}", "##{complement hex avg}"]
+        options.hue = (hsl avg)?[0] or (Math.random() * 240)
 
         $me
-          .css process canvas, options, (hsl avg)?[0] or (Math.random() * 240)
-          .trigger 'loaded', color
+          .css process canvas, options
+          .trigger 'loaded', colors
 
       # see https://coderwall.com/p/pa-2uw/using-external-images-with-canvas-getimagedata-and-todataurl
       img.crossOrigin = ''
       img.src = options.hue
 
     else
+      options.hue ?= (Math.random() * 240)
+
       $me
-        .css process canvas, options, (Math.random() * 240)
+        .css process canvas, options
         .trigger 'loaded'
 
     return $me

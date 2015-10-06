@@ -12,6 +12,22 @@ Router.route 'details',
   path: '/details/:url',
   waitOn: -> (Meteor.subscribe 'details', @params.url)
 
+  onAfterAction: _.throttle ->
+    $li = $('li', 'ul.collection')
+
+    $li.onlyVisible().velocity 'transition.slideRightIn',
+      complete: -> $li.css(opacity: 1)
+      duration: 1000
+      stagger: 150
+
+  , 2000, leading: no
+
+  onBeforeAction: ->
+    Meteor.setTimeout ->
+      $('#details').velocity 'transition.fadeIn', duration: 1000
+
+    @next()
+
 
 Router.route 'exit',
   path: '/exit'
@@ -30,15 +46,13 @@ Router.route 'search',
   notFoundTemplate: 'noResults'
   path: '/search/:term'
 
-  onAfterAction: ->
-    $('body,html').scrollTop 0
+  onBeforeAction: ->
+    $('span.term', '#send').css fontStyle: 'italic'
 
     Meteor.setTimeout ->
+      $('body').css backgroundColor: '#222'
       $('li.new', 'ul.collection').process()
 
-  onBeforeAction: ->
-    $('body').css backgroundImage: 'none'
-    $('span.term', '#send').css fontStyle: 'italic'
     @next()
 
   waitOn: ->

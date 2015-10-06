@@ -81,10 +81,20 @@ Template.search.events
 
 
   'click ul.collection a.primary-content': (event, template) ->
-    data = $(event.currentTarget).parents('li').data()
+    $cl = $('li', 'ul.collection')
+    data = $(event.currentTarget).parent().data()
+    url = (encodeURIComponent data.url)
 
+    $cl.onlyVisible().velocity
+      o:
+        complete: -> (Router.go 'details', {url})
+        duration: 1000
+        stagger: 150
+
+      p: 'transition.fadeOut'
+
+    ($cl.onlyVisible yes).css opacity: 0
     Session.set 'podcast', (_.omit data, 'url', 'velocity')
-    Router.go 'details', url: (encodeURIComponent data.url)
     event.preventDefault()
 
 

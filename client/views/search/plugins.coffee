@@ -1,16 +1,18 @@
+$.fn.onlyVisible = (reverse=no) ->
+  $(@).filter (index) ->
+    bounds = @getBoundingClientRect()
+    outside = (bounds.bottom < 0) or (bounds.top > window.innerHeight)
+    if reverse then outside else (not outside)
+
+
 $.fn.process = (out=no, callback=null) ->
   $(@)
     .toggleClass 'new', out
-
-    .filter (index) ->
-      rc = @getBoundingClientRect()
-      outside = (rc.bottom < 0) or (rc.top > window.innerHeight)
-      # console.log "##{index} outside: #{outside}\t(top: #{rc.top}, bottom: #{rc.bottom})"
-      not outside
+    .onlyVisible()
 
     .velocity switch
       when out then p: 'transition.slideDownBigOut', o: backwards: yes, complete: callback, stagger: 75
-      else p: 'transition.slideUpIn', o: complete: callback, stagger: 150
+      else p: 'transition.slideLeftBigIn', o: complete: callback, stagger: 150
 
 
 $.fn.scrollToView = ->

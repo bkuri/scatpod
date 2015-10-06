@@ -1,10 +1,12 @@
-.row
-  .col.s12
+section#settings
+  .container
     .row
       +checkbox id='shareStats' label='Make your usage data visible to other users' checked=shareStats
 
     .row
       +checkbox id='darkTheme' label='Use the dark theme variant' checked=darkTheme
-      
+
     .row
-      +range id='numResults' label='Maximum number of search results' min=0 max=numResults
+      //- +range id='numResults' label='Maximum number of search results' min=0 max=numResults
+      #numResults
+      p Left: {{slider[0]}}, Right: {{slider[1]}}

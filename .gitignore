@@ -1,3 +1,2 @@
-server/lib/config
-mup.json
-settings.json
+.secret_key
+

@@ -2,7 +2,7 @@ ul.collection
   if tracking
     each item
       if isEpisodeQueued enclosure.$.url
-        li.collection-item.grey.darken-4.white-text.avatar.dismissable
+        li.collection-item.white-text.avatar.dismissable
           a.queued(
             data-title='{{title}}'
             data-url='{{enclosure.$.url}}'
@@ -23,5 +23,5 @@ ul.collection
 
   else
     each item
-      li.collection-item.grey.darken-4.white-text
+      li.collection-item.white-text
         +episodeItem

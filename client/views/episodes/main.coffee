@@ -1,7 +1,9 @@
 Template.details.rendered = ->
+  $deets = $('#details')
+
   @autorun _.bind ->
     Deps.afterFlush ->
-      $('body')
+      $(document.body)
         .on 'loaded', (event, main, complement='#fff') ->
 
           # console.log main, backgroundColor
@@ -9,10 +11,7 @@ Template.details.rendered = ->
             .off 'loaded'
             .theme main, complement
 
-          Meteor.setTimeout ->
-            $('#details').css backgroundColor: 'rgba(34,34,34,0)'
-          , 1000
-        .bokeh hue: (Session.get 'podcast').img, img: '#thumb'
+        .setColorFrom '#thumb', (Session.get 'podcast').img
 
       $('.collapsible').collapsible()
   , this
@@ -24,11 +23,11 @@ getQueued = ->
   (_.findWhere profile.playlists, name: profile.playlist).tracks
 
 
-Template.episodes.created = ->
+Template.episodeList.created = ->
   @queued = -> (_.pluck getQueued(), 'url')
 
 ###
-Template.episodes.rendered = ->
+Template.episodeList.rendered = ->
   @autorun _.bind ->
     template = Template.instance()
 

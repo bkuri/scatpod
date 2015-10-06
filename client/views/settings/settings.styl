@@ -1,0 +1,82 @@
+.noUi-target
+  box-shadow none
+  border none
+
+  .noUi-active
+    &.noUi-handle
+      height 3px
+      left 0
+      top 0
+      width 3px
+
+    .range-label span
+      border-radius 15px 15px 15px 0
+      transform rotate(-45deg) translate(23px, -25px)
+
+  .range-label
+    background-color #26A69A
+    border-radius 50%
+    height 30px
+    left -2px
+    position absolute
+    top -17px
+    width 30px
+    transform scale(.5) rotate(-45deg)
+    transform-origin 50% 100%
+
+    transition border-radius .25s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+              transform .25s cubic-bezier(0.215, 0.610, 0.355, 1.000)
+
+.noUi-base
+  height 15px
+  top -6px
+
+.noUi-background
+  background-color #bfbfbf
+  height 3px
+  top 6px
+
+.noUi-horizontal
+  height 3px
+
+  .noUi-handle
+    background-color #26A69A
+    border none
+    border-radius 50%
+    box-shadow none
+    height 15px
+    left -5px
+    top -6px
+    width 15px
+    transition width .2s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+              height .2s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+              left .2s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+              top .2s cubic-bezier(0.215, 0.610, 0.355, 1.000)
+
+.noUi-connect
+  background-color #26A69A
+  box-shadow none
+  height 3px
+  top 6px
+
+.noUi-handle
+  &:before
+    content none
+  &:after
+    content none
+
+.range-label span
+  color #fff
+  font-size 12px
+  left -1px
+  opacity 0
+  position absolute
+  text-align center
+  top 7px
+  transform rotate(45deg)
+  transition opacity .25s cubic-bezier(0.215, 0.610, 0.355, 1.000)
+  width 100%
+
+.noUi-active
+  .range-label span
+    opacity 1

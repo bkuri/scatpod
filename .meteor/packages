@@ -46,7 +46,6 @@ iron:router
 materialize:materialize
 mquandalle:jade
 mquandalle:moment
-mquandalle:stylus
 peerlibrary:xml2js
 percolate:velocityjs
 reactive-var
@@ -57,3 +56,6 @@ accounts-base
 service-configuration
 useraccounts:iron-routing
 meteorhacks:ssr
+rcy:nouislider
+mquandalle:stylus
+rcy:chromajs

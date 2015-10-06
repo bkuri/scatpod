@@ -29,6 +29,7 @@ Meteor.publish 'details', (url) ->
 
   Meteor.call 'getFeed', (decodeURIComponent url), (error, result) =>
     if result?
+      result.item = (_.take result.item, 50)
       @added 'details', url, result
       @ready()
     else @ready()

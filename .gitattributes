@@ -1,0 +1,2 @@
+mup.json filter=git-crypt diff=git-crypt
+settings.json filter=git-crypt diff=git-crypt

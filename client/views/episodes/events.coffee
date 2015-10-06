@@ -4,8 +4,12 @@ Template.details.events
     $(event.currentTarget).addClass 'disabled'
 
 
-  'click a.btn-back': (event) ->
-    history.back()
+  'click a.btn-back': ->
+    Meteor.setTimeout ->
+      $('#details').velocity 'transition.fadeOut',
+        complete: -> history.back()
+        duration: 1000
+    , 500
 
 
   'click a.btn-leave': (event) ->
@@ -41,7 +45,7 @@ Template.details.events
       , 300
 
 
-Template.episodes.events
+Template.episodeList.events
   'click a': (event) ->
     event.preventDefault()
 

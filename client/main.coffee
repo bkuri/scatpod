@@ -11,6 +11,8 @@ window.getKeywords = (keywords) ->
   keys = if (_.isString keywords) then keywords else keywords[0]
   keys.split if (', ' in keys) then ', ' else ','
 
+
+$.Velocity.defaults duration: 500
 window.name = 'scatpod'
 
 ###

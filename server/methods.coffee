@@ -113,7 +113,7 @@ Meteor.methods
     Meteor.users.update find, $pull: 'profile.playlists.$.tracks': track
 
 
-  getFeed: (url) ->
+  getFeed: _.memoize (url) ->
     @unblock()
     (Meteor.wrapAsync getFeed) url
 
@@ -148,7 +148,7 @@ Meteor.methods
     Meteor.users.update userid, $pull: 'profile.podcasts': {_id}
 
 
-  podcastSearch: (term) ->
+  podcastSearch: _.memoize (term) ->
     params = _.extend {term},
       entity: 'podcast'
       limit: 200

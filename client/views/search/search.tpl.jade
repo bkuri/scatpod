@@ -1,12 +1,12 @@
 +fab
 
 if smallScreen
-  #results.container
+  section#results.container
     .row
       .col.l10.m12.s12.offset-l1
         ul.collection
           each results
-            li.new.collection-item-avatar.grey.darken-4.white-text(
+            li.new.collection-item-avatar.white-text(
               data-cat=genres
               data-cid=collectionId
               data-img=artworkUrl600
@@ -30,7 +30,7 @@ if smallScreen
 else
   +episodesModal
   
-  #results.container-fluid
+  section#results.container-fluid
     .row
       .col.l10.m12.s12.offset-l1
         +masonryContainer(

@@ -1,4 +1,4 @@
-#details
+section#details
   .container-fluid
     .row.toolbar
       .col.s4
@@ -28,7 +28,7 @@
   .container
     .row.summary
       .col.s4
-        img#thumb
+        img#thumb(crossorigin='')
 
       .col.s8
         h4.white-text= title
@@ -52,4 +52,4 @@
                 p.white-text= body
 
     .row.list
-      +episodes
+      +episodeList

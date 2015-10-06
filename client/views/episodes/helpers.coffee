@@ -38,7 +38,7 @@ Template.details.helpers
     document.documentElement.clientWidth
 
 
-Template.episodes.helpers
+Template.episodeList.helpers
   isEpisodeQueued: (url) ->
     url in Template.instance().queued()
 
