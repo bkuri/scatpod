@@ -2,10 +2,10 @@ ul.collection
   if tracking
     each item
       if isEpisodeQueued enclosure.$.url
-        li.collection-item.white-text.avatar.dismissable
+        li.collection-item.avatar.dismissable
           a.queued(
-            data-title='{{title}}'
-            data-url='{{enclosure.$.url}}'
+            data-title='#{title}'
+            data-url='#{enclosure.$.url}'
             href='#'
           )
           i.mdi-content-remove.black-text
@@ -14,8 +14,8 @@ ul.collection
       else
         li.collection-item.avatar.dismissable
           a.queue(
-            data-title='{{title}}'
-            data-url='{{enclosure.$.url}}'
+            data-title='#{title}'
+            data-url='#{enclosure.$.url}'
             href='#'
           )
           i.mdi-content-add.white-text
@@ -23,5 +23,5 @@ ul.collection
 
   else
     each item
-      li.collection-item.white-text
+      li.collection-item
         +episodeItem

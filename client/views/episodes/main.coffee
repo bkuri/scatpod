@@ -3,17 +3,8 @@ Template.details.rendered = ->
 
   @autorun _.bind ->
     Deps.afterFlush ->
-      $(document.body)
-        .on 'loaded', (event, main, complement='#fff') ->
-
-          # console.log main, backgroundColor
-          $(@)
-            .off 'loaded'
-            .theme main, complement
-
-        .setColorFrom '#thumb', (Session.get 'podcast').img
-
       $('.collapsible').collapsible()
+
   , this
 
 

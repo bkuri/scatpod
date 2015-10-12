@@ -44,7 +44,6 @@ gildaspk:autoform-materialize
 http
 iron:router
 materialize:materialize
-mquandalle:jade
 mquandalle:moment
 peerlibrary:xml2js
 percolate:velocityjs
@@ -59,3 +58,5 @@ meteorhacks:ssr
 rcy:nouislider
 mquandalle:stylus
 rcy:chromajs
+london:body-class
+dalgard:jade

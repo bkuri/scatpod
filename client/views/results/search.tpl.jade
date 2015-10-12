@@ -1,0 +1,81 @@
+if smallScreen
+  section#results(class=theme)
+    .container-fluid
+      .row
+        .col.l10.m12.s12.offset-l1
+          ul.collection
+            each results
+              li.new.collection-item-avatar.white-text(
+                data-cat=genres
+                data-cid=collectionId
+                data-img=artworkUrl600
+                data-url=feedUrl
+              )
+                a.white-text.primary-content.waves-effect.waves-red.waves-light(href='#')
+                  if isTracking collectionId
+                    a.disabled.white-text.secondary-content.untrack(href='#'): i.small.white-text.mdi-content-remove-circle
+                  else
+                    a.disabled.white-text.secondary-content.join(href='#'): i.small.white-text.mdi-content-add-circle
+                  //- .thumb(style="background: url(#{artworkUrl60}) no-repeat center hsl(200,50%,50%)")
+                  img.thumb(crossorigin='' src=artworkUrl60)
+                  p
+                    h6 #{truncate collectionCensoredName 54}
+                    strong #{truncate artistName 34}
+                    br
+                    if isExplicit collectionExplicitness
+                      span.label.red.black-text explicit
+                    each labelize genres
+                      span.label.white.black-text= this
+
+else
+  +episodesModal
+  
+  section#results.container-fluid
+    .row
+      .col.l10.m12.s12.offset-l1
+        +masonryContainer(
+          columnWidth='.grid-sizer'
+          gutter='.gutter-sizer'
+          id='grid'
+          percentPosition=true
+          transitionDuration='0.1s'
+        )
+          .grid-sizer
+          .gutter-sizer
+          each results
+            +masonryElement('grid')
+              .card.small.hoverable(
+                data-id=collectionId
+                data-feed=feedUrl
+                data-genres=genres
+              )
+                div($dyn=imbg)
+                  img(
+                    crossorigin=''
+                    src=artworkUrl600
+                    title=collectionName
+                  )
+
+                .card-content.activator
+                  span.card-title.grey-text.text-darken-4 #{truncate collectionName 60}
+
+                .card-reveal
+                  span.tools
+                    a.disabled.black-text.list(href='#'): i.small.mdi-av-album
+                    a.disabled.black-text.play(href='#'): i.small.mdi-av-play-circle-fill
+                    if isTracking collectionId
+                      a.disabled.black-text.untrack(href='#'): i.small.mdi-content-remove-circle
+                    else
+                      a.disabled.black-text.join(href='#'): i.small.mdi-content-add-circle
+
+                  img.thumb(crossorigin='' src=artworkUrl60)
+                  span.card-title.grey-text.text-darken-4 #{truncate collectionName 50}
+
+                  .labels
+                    if isExplicit collectionExplicitness
+                      span.label.red explicit
+                    each labelize genres
+                      span.label.grey.darken-1= this
+
+                  p.description
+                  +spinner_mini

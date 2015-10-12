@@ -6,6 +6,15 @@ Template.layout.events
     $('#search').addClass 'hide'
 
 
+  'click #fab > a': (event) ->
+    event.preventDefault()
+
+    $('html').velocity 'scroll',
+      duration: ($(window).scrollTop() / 3)
+      easing: 'ease-out'
+      mobileHA: no
+
+
   'click #send a': (event, template) ->
     event.preventDefault()
     $search = $('#search')

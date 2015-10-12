@@ -13,7 +13,7 @@
         li.search
           a.white-text.waves-effect.waves-light(href='#')
             i.mdi-action-search.right
-            span.term #{term}
+            span.term= term
 
       ul#user-menu.dropdown-content
         li: a(href='#!') Profile
@@ -24,7 +24,7 @@
           li: a(href='#!') Logout
 
       ul#mobile-nav.side-nav
-        li: a(href='{{pathFor route="home"}}')
+        li: a(href='#{pathFor route="home"}')
           i.mdi-action-home.left
           | Home
 
@@ -32,7 +32,7 @@
           i.mdi-content-add.left
           | Add more podcasts
 
-        li: a(href='{{pathFor route="settings"}}')
+        li: a(href='#{pathFor route="settings"}')
           i.mdi-action-settings.left
           | Settings
 

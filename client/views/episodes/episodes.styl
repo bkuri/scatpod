@@ -9,13 +9,10 @@
     left 0
     width 100%
     height 100%
-    // z-index 1
 
   h4
     line-height 0.9
     margin 0
-    // text-shadow 0 0 10px black
-    // z-index 2
 
   h5
     font-size 1.5rem
@@ -27,14 +24,7 @@
     font-size smaller
     font-weight 200
     margin-top 0
-  /*
-  img.background
-    filter blur(60px)
-    left 0
-    position fixed
-    top 0
-    transform translate3d(0,0,0)
-  */
+
   p
     line-height 1.1rem
 
@@ -69,20 +59,38 @@
 
 
 #details
-  // background-color #222
+  $faded-black = rgba(0, 0, 0, 0.5)
+  $faded-white = rgba(255, 255, 255, 0.5)
+
   opacity 0
-  // transition background 0.5s ease-out
+
+  &.negative
+    a, h4, i, p, .collapsible-header
+      color $faded-white
+
+    span.label:not(.red), li.collection-item
+      background-color $faded-white
+      color $faded-black
+
+    .row.summary
+      border-color $faded-white
+
+  &.positive
+    a, h4, i, p, .collapsible-header
+      color $faded-black
+
+    span.label:not(.red), li.collection-item
+      background-color $faded-black
+      color $faded-white
+
+    .row.summary
+      border-color $faded-black
 
   h4
-    // border-bottom thin solid rgba(255, 255, 255, 0.5)
     font-size 1.5rem
     font-weight 100
-    // height 7.5rem
     margin 0
-    // padding-bottom 0.25rem
     position relative
-    // text-shadow 0 0 10px black
-    // z-index 2
 
   img
     max-width 100%
@@ -98,7 +106,7 @@
       position relative
 
       .collapsible-body
-        border-bottom thin solid rgba(255, 255, 255, 0.5)
+        border-bottom thin solid $faded-white
 
         p
           font-size smaller
@@ -120,16 +128,15 @@
           font-size inherit
           line-height 1.5rem
           margin 0
-          opacity 0.7
           text-align right
           width 8px
 
   ul.collection
     border-radius 3px
-    margin 1rem 0
+    margin 0
 
   .blurb .col
-    padding 0
+    padding 0.5rem 0
 
   .btn-flat
     font-weight 100
@@ -145,9 +152,6 @@
     > .row:last-child
       margin-bottom 1rem
 
-  .label
-    opacity 0.7
-
   .labels
     margin-top 0.25rem
     position relative
@@ -156,20 +160,18 @@
     margin-bottom 0
 
   .summary
-    border-top thin solid rgba(255, 255, 255, 0.5)
-    border-bottom thin solid rgba(255, 255, 255, 0.5)
+    border-top thin solid $faded-white
+    border-bottom thin solid $faded-white
     padding 1rem 0 0.5rem 0
 
     .s4
       padding 0
 
     .s8
-      padding-left 0.5rem
+      // padding-left 0.5rem
       padding-right 0
 
   .toolbar
-    // border-bottom thin solid rgba(255, 255, 255, 0.5)
-
     .col
       padding 0
 
@@ -192,7 +194,6 @@
 
       i
         font-size 1rem
-        opacity 0.7
 
   .waves-effect.waves-white .waves-ripple
-    background-color rgba(255, 255, 255, 0.5)
+    background-color $faded-white

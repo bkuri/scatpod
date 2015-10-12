@@ -1,122 +1,35 @@
-# bokeh
+# generate blurred backgrounds using a list of colors
 # heavily tweaked version of jabahar/bokehBg + StackBlur
 
 (($) ->
-  # get average color from an image
-  # see http://stackoverflow.com/a/2541680/4305736
-  average = (img) ->
-    buffer = (document.createElement 'canvas')
-    context = (buffer.getContext '2d')
-    # return null unless context?
-
-    buffer.height = img.naturalHeight or img.offsetHeight or img.height
-    buffer.width = img.naturalWidth or img.offsetWidth or img.width
-
-    try
-      context.drawImage img, 0, 0
-      data = (context.getImageData 0, 0, buffer.width, buffer.height)
-
-    catch error
-      console.error error
-      return null
-
-    blockSize = 5
-    count = 0
-    i = -4
-    rgb = [0, 0, 0]
-
-    while (i += blockSize * 4) < data.data.length
-      ++count
-      rgb[0] += data.data[i]
-      rgb[1] += data.data[i + 1]
-      rgb[2] += data.data[i + 2]
-
-    rgb[0] //= count
-    rgb[1] //= count
-    rgb[2] //= count
-
-    # console.log "average (RGB) -> #{rgb}"
-    return rgb
-
-  # retrieve complementary color in hex
-  # see http://stackoverflow.com/questions/1664140/js-function-to-calculate-complementary-colour#comment36960839_21924155
-  complement = (color) ->
-    ('000000' + (('0xffffff' ^ "0x#{color}").toString(16))).slice(-6)
-
-
-  # convert rgb values to hex
-  # see http://stackoverflow.com/a/31464903/4305736
-  hex = (rgb) ->
-    ('00000' + (rgb[0] << 16 | rgb[1] << 8 | rgb[2]).toString(16)).slice(-6)
-
-
-  # convert rgb values to hsl
-  # see https://gmigdos.wordpress.com/2011/01/13/javascript-convert-rgb-values-to-hsl/
-  hsl = (rgb) ->
-    r = (rgb[0] / 255)
-    g = (rgb[1] / 255)
-    b = (rgb[2] / 255)
-
-    maxC = (Math.max r, g, b)
-    minC = (Math.min r, g, b)
-
-    h = 0
-    s = 0
-    l = (maxC + minC) / 2
-
-    unless maxC is minC
-      diff = (maxC - minC)
-
-      h = switch
-        when (r is maxC) then (g - b) / diff
-        when (g is maxC) then 2.0 + (b - r) / diff
-        else 4.0 + (r - g) / diff
-
-      s = switch
-        when (l < 0.5) then diff / (maxC + minC)
-        else diff / (2.0 - diff)
-
-    h *= 60
-    s *= 100
-    l *= 100
-
-    (h += 360) if (h < 0)
-
-    value = [
-      Math.floor h
-      Math.floor s
-      Math.floor l
-    ]
-
-    # console.log "average (HSL) -> #{value}"
-    return value
-
-
   process = (canvas, options) ->
     context = (canvas.getContext '2d')
     maxRadius = options.maxRadius or Math.min(canvas.width, canvas.height) / 2
     minRadius = options.minRadius or (maxRadius / 2)
-    hue = options.hue or (Math.random() * 240)
-    opts = $.extend({hue, minRadius, maxRadius}, $.fn.bokeh.defaults, options)
+    opts = $.extend({minRadius, maxRadius}, $.fn.bokeh.defaults, options)
     total = unless opts.total? then Math.round((canvas.width * canvas.height) / 30000) else opts.total
 
-    context.fillStyle = opts.bg
+    context.fillStyle = chroma(opts.colors[0]).css()
     context.fillRect 0, 0, canvas.width, canvas.height
-    (console.log total, opts.minRadius, opts.maxRadius, opts.hue) if opts.log
+    (console.log total, opts.minRadius, opts.maxRadius, opts.colors) if opts.log
 
-    for i in [0..total]
+
+    if (chroma(opts.base).luminance() < 0.4)
+      opts.colors
+        .sort (a, b) -> (chroma(a).luminance() > chroma(b).luminance())
+        .map (c, i) -> opts.colors[i] = (chroma(c).luminance 0.1)
+
+    else
+      opts.colors.sort (a, b) -> (chroma(a).luminance() < chroma(b).luminance())
+
+    for color in opts.colors
       context.beginPath()
-
-      h = opts.hue + (Math.random() * 30)
-      s = 20 + (Math.random() * 60)
-      l = 10 + (Math.random() * 40)
-      a = 0.25 + (Math.random() * 0.55)
 
       x = Math.floor(Math.random() * canvas.width)
       y = Math.floor(Math.random() * canvas.height)
       r = Math.floor(Math.random() * (opts.maxRadius - opts.minRadius)) + opts.minRadius
 
-      context.fillStyle = "hsla(#{h}, #{s}%, #{l}%, #{a})"
+      context.fillStyle = chroma(color).luminance(0.4).css()
       context.arc x, y, r, 0, (Math.PI * 2), yes
       context.fill()
 
@@ -126,46 +39,27 @@
 
     catch error
       console.error error
-      'background-color': "hsl(#{opts.hue}%, 15%, 20%)"
+      'background-color': chroma(opts.colors[0]).css()
 
 
   $.fn.bokeh = (options={}) ->
-    $me = $(@)
+    $me = $(@).data base: options.base, colors: options.colors
     canvas = (document.createElement 'canvas')
-    canvas.height = document.documentElement.clientHeight # parseInt $me.height()
-    canvas.width = document.documentElement.clientWidth # parseInt $me.width()
+    canvas.height = document.documentElement.clientHeight
+    canvas.width = document.documentElement.clientWidth
 
-    if (_.isString options.hue)
-      img = (document.querySelector options.img) or new Image()
-
-      img.onload = (e) ->
-        avg = (average img)
-        colors = ["##{hex avg}", "##{complement hex avg}"]
-        options.hue = (hsl avg)?[0] or (Math.random() * 240)
-
-        $me
-          .css process canvas, options
-          .trigger 'loaded', colors
-
-      # see https://coderwall.com/p/pa-2uw/using-external-images-with-canvas-getimagedata-and-todataurl
-      img.crossOrigin = ''
-      img.src = options.hue
-
-    else
-      options.hue ?= (Math.random() * 240)
-
-      $me
-        .css process canvas, options
-        .trigger 'loaded'
+    $me
+      .css process canvas, options
+      .trigger 'loaded'
 
     return $me
 
 
   $.fn.bokeh.defaults =
-    bg: '#222'
-    blur: 50
+    base: 0x222
+    blur: 100
+    colors: [0x666]
     log: no
-    total: 5
 
 
   return

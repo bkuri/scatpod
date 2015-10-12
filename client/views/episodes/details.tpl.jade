@@ -1,55 +1,55 @@
-section#details
+section#details(class=theme)
   .container-fluid
     .row.toolbar
       .col.s4
-        a.btn-flat.waves-effect.waves-white.white-text.btn-back(href='#')
+        a.btn-flat.waves-effect.waves-white.btn-back(href='#')
           span
-            i.white-text.mdi-navigation-arrow-back
+            i.mdi-navigation-arrow-back
             | Back
 
       .col.s4
-        a.btn-flat.waves-effect.waves-white.white-text.btn-play(href='#')
+        a.btn-flat.waves-effect.waves-white.btn-play(href='#')
           span
-            i.white-text.mdi-av-play-arrow
+            i.mdi-av-play-arrow
             | Sample
 
       .col.s4
         if isTracking cid
-          a.btn-flat.waves-effect.waves-white.white-text.btn-leave(href='#')
+          a.btn-flat.waves-effect.waves-white.btn-leave(href='#')
             span.right
-              i.white-text.mdi-content-remove
+              i.mdi-content-remove
               | Remove
         else
-          a.btn-flat.waves-effect.waves-white.white-text.btn-join(href='#')
+          a.btn-flat.waves-effect.waves-white.btn-join(href='#')
             span.right
-              i.white-text.mdi-content-add
+              i.mdi-content-add
               | Add
 
   .container
     .row.summary
       .col.s4
-        img#thumb(crossorigin='')
+        img#thumb(crossorigin='' src=img)
 
       .col.s8
-        h4.white-text= title
+        h4= title
 
         .labels
           if isExplicit collectionExplicitness
             span.label.red.white-text explicit
           each genres
-            span.label.white.black-text= this
+            span.label= this
 
     .row.blurb
       .col.s12
         ul.collapsible(data-collapsible='accordion')
           each accordionElements
             li
-              .collapsible-header.white-text.waves-effect.waves-white
+              .collapsible-header.waves-effect.waves-white
                 i($dyn=icon)
-                | #{title}
+                = title
 
               .collapsible-body
-                p.white-text= body
+                p= body
 
     .row.list
       +episodeList

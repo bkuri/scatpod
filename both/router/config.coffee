@@ -1,16 +1,3 @@
-Router.configure
-  layoutTemplate: 'layout'
-  loadingTemplate: 'loading'
-  notFoundTemplate: 'not_found'
-
-
-Router.plugin 'ensureSignedIn',
-  only: [
-    'search'
-    'settings'
-  ]
-
-
 AccountsTemplates.configure
   showForgotPasswordLink: yes
   overrideLoginErrors: yes
@@ -32,4 +19,11 @@ AccountsTemplates.configureRoute 'signUp'
 AccountsTemplates.configureRoute 'verifyEmail'
 
 
+Router.configure
+  layoutTemplate: 'layout'
+  loadingTemplate: 'loading'
+  notFoundTemplate: 'not_found'
+
+
+Router.plugin 'ensureSignedIn', only: ['search', 'settings']
 T9n.setLanguage 'en'

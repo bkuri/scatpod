@@ -12,7 +12,7 @@ $.fn.process = (out=no, callback=null) ->
 
     .velocity switch
       when out then p: 'transition.slideDownBigOut', o: backwards: yes, complete: callback, stagger: 75
-      else p: 'transition.slideLeftBigIn', o: complete: callback, stagger: 150
+      else p: 'transition.fadeIn', o: complete: callback, stagger: 150
 
 
 $.fn.scrollToView = ->

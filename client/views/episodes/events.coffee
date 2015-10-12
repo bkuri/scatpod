@@ -65,8 +65,6 @@ Template.episodeList.events
         .removeClass('queue').addClass('queued').next('i')
         .removeClass('mdi-content-add white-text').addClass 'mdi-content-remove black-text'
 
-      # $('a:not(.r)', '#fab').removeClass 'disabled'
-
 
   'click a.queued': (event) ->
     $a = $(event.target).addClass 'disabled'

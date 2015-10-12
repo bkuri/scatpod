@@ -16,7 +16,7 @@ Router.route 'details',
     $li = $('li', 'ul.collection')
 
     $li.onlyVisible().velocity 'transition.slideRightIn',
-      complete: -> $li.css(opacity: 1)
+      complete: -> ($li.css opacity: 1)
       duration: 1000
       stagger: 150
 

@@ -1,13 +1,4 @@
 Template.search.events
-  'click #fab > a': (event) ->
-    event.preventDefault()
-
-    $('html').velocity 'scroll',
-      duration: ($(window).scrollTop() / 3)
-      easing: 'ease-out'
-      mobileHA: no
-
-
   'click span.tools > a': (event) ->
     event.preventDefault()
     event.stopPropagation()
@@ -81,11 +72,11 @@ Template.search.events
 
 
   'click ul.collection a.primary-content': (event, template) ->
-    $cl = $('li', 'ul.collection')
+    $col = $('li', 'ul.collection')
     data = $(event.currentTarget).parent().data()
     url = (encodeURIComponent data.url)
 
-    $cl.onlyVisible().velocity
+    $col.onlyVisible().velocity
       o:
         complete: -> (Router.go 'details', {url})
         duration: 1000
@@ -93,7 +84,19 @@ Template.search.events
 
       p: 'transition.fadeOut'
 
-    ($cl.onlyVisible yes).css opacity: 0
+    img = (event.currentTarget.querySelector 'img.thumb')
+    # base = (window.averageColor img)
+    thief = new ColorThief()
+    # color = (thief.getColor img)
+    colors = (thief.getPalette img, 4)
+    # container = '#details'
+
+    #$(document.body).bokeh {base, colors, container}
+    # document.body.style.backgroundColor = chroma(color).css()
+    # document.body.style.backgroundColor = chroma(colors[0]).css()
+    document.body.style.backgroundColor = chroma(window.averageColor img).css()
+
+    ($col.onlyVisible yes).css opacity: 0
     Session.set 'podcast', (_.omit data, 'url', 'velocity')
     event.preventDefault()
 

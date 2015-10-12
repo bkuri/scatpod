@@ -1,14 +1,13 @@
 Template.details.helpers
   accordionElements: ->
+    icon = class: 'mdi-action-settings-ethernet mdi-rotate-90 right'
     [
-      {
+      _.extend {icon}, {
         body: 'Show description'
-        icon: class: 'mdi-action-settings-ethernet mdi-rotate-90 right white-text'
         title: 'Summary'
       }
-      {
+      _.extend {icon}, {
         body: 'Show description'
-        icon: class: 'mdi-action-settings-ethernet mdi-rotate-90 right white-text'
         title: 'Other details'
       }
     ]
