@@ -74,15 +74,11 @@ Template.results.events
   'click ul.collection a.primary-content': (event, template) ->
     $col = $('li', 'ul.collection')
     data = $(event.currentTarget).parent().data()
+    img = (event.currentTarget.querySelector 'img.thumb')
     url = (encodeURIComponent data.url)
 
-    colors = []
-    img = (event.currentTarget.querySelector 'img.thumb')
-    thief = new ColorThief()
-
-    (thief.getPalette img, 3, 1)
-      .sort (a, b) -> chroma(a).luminance() > chroma(b).luminance()
-      .map (color) -> colors.push chroma(color).css()
+    event.preventDefault()
+    window.setTheme (new ColorThief().getPalette img, 3, 1)
 
     $col.onlyVisible().velocity
       o:
@@ -94,8 +90,6 @@ Template.results.events
 
     ($col.onlyVisible yes).css opacity: 0
     Session.set 'podcast', (_.omit data, 'url', 'velocity')
-    window.setTheme colors
-    event.preventDefault()
 
 
   'click .activator': (event) ->

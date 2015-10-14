@@ -21,9 +21,7 @@ Template.results.helpers
 
 
   labelize: (genres) ->
-    labels = _.reject (_.first genres, 3), (g) -> (g.toLowerCase() is 'podcasts')
-    # labels.sort (a, b) -> (a.length - b.length)
-    labels
+    _.first (_.reject genres, (genre) -> genre is 'Podcasts'), 2
 
 
   moreResults: ->

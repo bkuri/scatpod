@@ -16,10 +16,7 @@ Template.details.helpers
     (Session.get 'podcast').cid
 
   genres: ->
-    genres = window.getKeywords (Session.get 'podcast').cat
-    labels = _.reject (_.first genres, 3), (g) -> (g.toLowerCase() is 'podcast')
-    # labels.sort (a, b) -> (a.length - b.length)
-    labels
+    window.getKeywords (Session.get 'podcast').cat
 
   height: ->
     document.documentElement.clientHeight
