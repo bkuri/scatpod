@@ -1,4 +1,4 @@
-Template.search.helpers
+Template.results.helpers
   imbg: ->
     class: [
       'card-image waves-block waves-effect waves-light'

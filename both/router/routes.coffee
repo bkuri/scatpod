@@ -45,12 +45,12 @@ Router.route 'exit',
 Router.route 'search',
   notFoundTemplate: 'noResults'
   path: '/search/:term'
+  template: 'results'
 
   onBeforeAction: ->
     $('span.term', '#send').css fontStyle: 'italic'
 
     Meteor.setTimeout ->
-      $('body').css backgroundColor: '#222'
       $('li.new', 'ul.collection').process()
 
     @next()

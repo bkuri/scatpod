@@ -2,25 +2,25 @@ section#details(class=theme)
   .container-fluid
     .row.toolbar
       .col.s4
-        a.btn-flat.waves-effect.waves-white.btn-back(href='#')
+        a.btn-flat.waves-effect.waves-contrast.btn-back(href='#')
           span
             i.mdi-navigation-arrow-back
             | Back
 
       .col.s4
-        a.btn-flat.waves-effect.waves-white.btn-play(href='#')
+        a.btn-flat.waves-effect.waves-contrast.btn-play(href='#')
           span
             i.mdi-av-play-arrow
             | Sample
 
       .col.s4
         if isTracking cid
-          a.btn-flat.waves-effect.waves-white.btn-leave(href='#')
+          a.btn-flat.waves-effect.waves-contrast.btn-leave(href='#')
             span.right
               i.mdi-content-remove
               | Remove
         else
-          a.btn-flat.waves-effect.waves-white.btn-join(href='#')
+          a.btn-flat.waves-effect.waves-contrast.btn-join(href='#')
             span.right
               i.mdi-content-add
               | Add
@@ -44,7 +44,7 @@ section#details(class=theme)
         ul.collapsible(data-collapsible='accordion')
           each accordionElements
             li
-              .collapsible-header.waves-effect.waves-white
+              .collapsible-header.waves-effect.waves-contrast
                 i($dyn=icon)
                 = title
 
