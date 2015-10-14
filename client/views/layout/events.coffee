@@ -2,7 +2,7 @@ Template.layout.events
   'blur #search input': (event, template) ->
     return unless template.searching.get()
 
-    $('span.term', '#send').removeClass 'hide'
+    # $('span.term', '#send').removeClass 'hide'
     $('#search').addClass 'hide'
 
 
@@ -20,7 +20,7 @@ Template.layout.events
     $search = $('#search')
 
     if ($search.hasClass 'hide')
-      $(event.currentTarget).find('span.term').addClass 'hide'
+      # $(event.currentTarget).find('span.term').addClass 'hide'
 
       $search
         .removeClass 'hide'

@@ -1,3 +1,39 @@
+$faded-black = rgba(0, 0, 0, 0.5)
+$faded-white = rgba(255, 255, 255, 0.5)
+
+
+body.details
+  &.negative
+    section
+      a, h4, i, li.collection-item, p, .collapsible-header
+        color $faded-white
+
+      span.label:not(.red)
+        background-color $faded-white
+        color $faded-black
+
+      .collapsible-body, .row, .summary, .toolbar, li.collection-item
+        border-color $faded-white
+
+      .waves-effect.waves-contrast .waves-ripple
+        background-color $faded-white
+
+  &.positive
+    section
+      a, h4, i, li.collection-item, p, .collapsible-header
+        color $faded-black
+
+      span.label:not(.red)
+        background-color $faded-black
+        color $faded-white
+
+      .collapsible-body, .row, .summary, .toolbar, li.collection-item
+        border-color $faded-black
+
+      .waves-effect.waves-contrast .waves-ripple
+        background-color $faded-black
+
+
 #details,
 #episodes
   max-height inherit
@@ -16,13 +52,13 @@
 
   h5
     font-size 1.5rem
-    font-weight 100
+    font-weight 400
     line-height 0.9
     margin 0
 
   h6
     font-size smaller
-    font-weight 200
+    font-weight 400
     margin-top 0
 
   p
@@ -59,32 +95,7 @@
 
 
 #details
-  $faded-black = rgba(0, 0, 0, 0.5)
-  $faded-white = rgba(255, 255, 255, 0.5)
-
   opacity 0
-
-  &.negative
-    a, h4, i, p, .collapsible-header
-      color $faded-white
-
-    span.label:not(.red), li.collection-item
-      background-color $faded-white
-      color $faded-black
-
-    .row.summary
-      border-color $faded-white
-
-  &.positive
-    a, h4, i, p, .collapsible-header
-      color $faded-black
-
-    span.label:not(.red), li.collection-item
-      background-color $faded-black
-      color $faded-white
-
-    .row.summary
-      border-color $faded-black
 
   h4
     font-size 1.5rem
@@ -97,6 +108,11 @@
     position relative
     width 100%
 
+  li.collection-item
+    background none
+    border-top-style solid
+    border-top-width thin
+
   ul.collapsible
     border none
     box-shadow none
@@ -106,7 +122,8 @@
       position relative
 
       .collapsible-body
-        border-bottom thin solid $faded-white
+        // border-bottom-width thin
+        border none
 
         p
           font-size smaller
@@ -117,7 +134,7 @@
         border none
         background none
         display inherit
-        font-weight 200
+        font-weight 400
         height 2rem
         line-height 2rem
         min-height inherit
@@ -139,7 +156,7 @@
     padding 0.5rem 0
 
   .btn-flat
-    font-weight 100
+    font-weight 400
     padding 0 1rem
     width 100%
 
@@ -152,6 +169,14 @@
     > .row:last-child
       margin-bottom 1rem
 
+  .container-fluid
+    top 4rem
+    width 100%
+    z-index 100
+
+    &.pinned + .container
+      margin-top 2.5rem
+
   .labels
     margin-top 0.25rem
     position relative
@@ -160,8 +185,7 @@
     margin-bottom 0
 
   .summary
-    border-top thin solid $faded-white
-    border-bottom thin solid $faded-white
+    border-bottom-width thin
     padding 1rem 0 0.5rem 0
 
     .s4
@@ -172,6 +196,9 @@
       padding-right 0
 
   .toolbar
+    border-bottom-style solid
+    border-bottom-width thin
+
     .col
       padding 0
 
@@ -194,6 +221,3 @@
 
       i
         font-size 1rem
-
-  .waves-effect.waves-white .waves-ripple
-    background-color $faded-white

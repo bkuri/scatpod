@@ -1,9 +1,9 @@
-Template.search.created = ->
+Template.results.created = ->
   @count = new ReactiveVar 0
   @limit = new ReactiveVar 40
 
 
-Template.search.rendered = ->
+Template.results.rendered = ->
   $fab = $('#fab')
   $results = $('.row').first()
   $win = $(window)

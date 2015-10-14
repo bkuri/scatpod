@@ -4,6 +4,8 @@ Template.details.rendered = ->
   @autorun _.bind ->
     Deps.afterFlush ->
       $('.collapsible').collapsible()
+      $toolbar = $('.container-fluid', '#details').css backgroundColor: document.body.style.backgroundColor
+      $toolbar.pushpin offset: $toolbar.offset().top, top: $toolbar.offset().top
 
   , this
 

@@ -1,4 +1,4 @@
-Template.search.events
+Template.results.events
   'click span.tools > a': (event) ->
     event.preventDefault()
     event.stopPropagation()
@@ -35,7 +35,7 @@ Template.search.events
         $a.removeClass 'disabled playing'
 
 
-  'click span.tools > a.join': (event, template) ->
+  'click a.attach': (event, template) ->
     $a = $(event.currentTarget)
     data = ($a.parents '.card').data()
 
@@ -52,7 +52,7 @@ Template.search.events
       Materialize.toast 'Subscribed to podcast', 1000
 
 
-  'click span.tools > a.untrack': (event, template) ->
+  'click a.detach': (event, template) ->
     $a = $(event.currentTarget)
     id = ($a.parents '.card').data 'id'
 
@@ -76,6 +76,14 @@ Template.search.events
     data = $(event.currentTarget).parent().data()
     url = (encodeURIComponent data.url)
 
+    colors = []
+    img = (event.currentTarget.querySelector 'img.thumb')
+    thief = new ColorThief()
+
+    (thief.getPalette img, 3, 1)
+      .sort (a, b) -> chroma(a).luminance() > chroma(b).luminance()
+      .map (color) -> colors.push chroma(color).css()
+
     $col.onlyVisible().velocity
       o:
         complete: -> (Router.go 'details', {url})
@@ -84,20 +92,9 @@ Template.search.events
 
       p: 'transition.fadeOut'
 
-    img = (event.currentTarget.querySelector 'img.thumb')
-    # base = (window.averageColor img)
-    thief = new ColorThief()
-    # color = (thief.getColor img)
-    colors = (thief.getPalette img, 4)
-    # container = '#details'
-
-    #$(document.body).bokeh {base, colors, container}
-    # document.body.style.backgroundColor = chroma(color).css()
-    # document.body.style.backgroundColor = chroma(colors[0]).css()
-    document.body.style.backgroundColor = chroma(window.averageColor img).css()
-
     ($col.onlyVisible yes).css opacity: 0
     Session.set 'podcast', (_.omit data, 'url', 'velocity')
+    window.setTheme colors
     event.preventDefault()
 
 

@@ -1,16 +1,19 @@
-@Details = new Mongo.Collection 'details'
-@Search = new Mongo.Collection 'search'
+@Details = new Mongo.Collection('details')
+@Search = new Mongo.Collection('search')
 
 
+Session.setDefault 'colors', ['#222', '#fff', '#000', '#fab']
 Session.setDefault 'podcast', {}
+Session.setDefault 'theme', 'negative'
 Session.setDefault 'tracking', []
 
 
-UI.registerHelper 'theme', ->
-  base = $(document.body).data 'base'
-  return 'negative' unless base?
-  if chroma(base).luminance() < 0.4 then 'negative' else 'positive'
+Blaze.addBodyClass [
+  -> (Session.get 'theme')
+  -> Meteor.status().status
+]
 
+$.Velocity.defaults duration: 500
 
 # get average color from an image
 # see http://stackoverflow.com/a/2541680/4305736
@@ -53,8 +56,21 @@ window.getKeywords = (keywords) ->
   keys.split if (', ' in keys) then ', ' else ','
 
 
-$.Velocity.defaults duration: 500
-window.name = 'scatpod'
+window.setTheme = (colors) ->
+  base = (chroma colors[1])
+  luminance = base.luminance()
+  setClass = (l) -> if (l < 0.5) then 'negative' else 'positive'
+
+  $('#mobile-nav, .secondary-color, .divider')
+    .css backgroundColor: colors[3]
+    .removeClass 'negative positive'
+    .addClass (setClass chroma(colors[3]).luminance())
+
+  document.body.style.backgroundColor = colors[1]
+  Session.set 'colors', colors
+  Session.set 'theme', (setClass luminance)
+  console.log "color: #{base.hex()}\tluminance: #{luminance}"
+
 
 ###
 Meteor.startup ->
