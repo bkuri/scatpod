@@ -2,23 +2,23 @@ ul.collection
   if tracking
     each item
       if isEpisodeQueued enclosure.$.url
-        li.collection-item.avatar.dismissable
+        li.collection-item.avatar.dismissable.color-1
           a.queued(
-            data-title='#{title}'
-            data-url='#{enclosure.$.url}'
+            data-title=title
+            data-url=enclosure.$.url
             href='#'
           )
-          i.mdi-content-remove.black-text
+          i.mdi-content-remove
           +episodeItem
       
       else
-        li.collection-item.avatar.dismissable
+        li.collection-item.avatar.dismissable.color-1
           a.queue(
-            data-title='#{title}'
-            data-url='#{enclosure.$.url}'
+            data-title=title
+            data-url=enclosure.$.url
             href='#'
           )
-          i.mdi-content-add.white-text
+          i.mdi-content-add
           +episodeItem          
 
   else

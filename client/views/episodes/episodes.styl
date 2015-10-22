@@ -1,18 +1,22 @@
-$faded-black = rgba(0, 0, 0, 0.5)
-$faded-white = rgba(255, 255, 255, 0.5)
-
+@import '../colors'
 
 body.details
   &.negative
     section
-      a, h4, i, li.collection-item, p, .collapsible-header
+      a, p
         color $faded-white
+
+      a.queue + i
+        color $faded-black
+
+      img
+        box-shadow 0 0 1px $faded-white
 
       span.label:not(.red)
         background-color $faded-white
         color $faded-black
 
-      .collapsible-body, .row, .summary, .toolbar, li.collection-item
+      .collapsible-body, .summary, .toolbar
         border-color $faded-white
 
       .waves-effect.waves-contrast .waves-ripple
@@ -20,14 +24,20 @@ body.details
 
   &.positive
     section
-      a, h4, i, li.collection-item, p, .collapsible-header
+      a, p
         color $faded-black
+
+      a.queue + i
+        color $faded-white
+
+      img
+        box-shadow 0 0 1px $faded-black
 
       span.label:not(.red)
         background-color $faded-black
         color $faded-white
 
-      .collapsible-body, .row, .summary, .toolbar, li.collection-item
+      .collapsible-body, .summary, .toolbar
         border-color $faded-black
 
       .waves-effect.waves-contrast .waves-ripple
@@ -51,7 +61,7 @@ body.details
     margin 0
 
   h5
-    font-size 1.5rem
+    font-size 1.2rem
     font-weight 400
     line-height 0.9
     margin 0
@@ -75,7 +85,7 @@ body.details
     z-index 2
 
     a[class^=queue]
-      border-color transparent white transparent transparent
+      border-color transparent
       border-style solid
       border-width 0 35px 35px 0
       position absolute
@@ -95,23 +105,21 @@ body.details
 
 
 #details
-  opacity 0
+  // opacity 0
 
   h4
     font-size 1.5rem
-    font-weight 100
     margin 0
     position relative
 
   img
+    margin-left 0.5rem
     max-width 100%
     position relative
     width 100%
 
   li.collection-item
     background none
-    border-top-style solid
-    border-top-width thin
 
   ul.collapsible
     border none
@@ -122,7 +130,6 @@ body.details
       position relative
 
       .collapsible-body
-        // border-bottom-width thin
         border none
 
         p
@@ -138,15 +145,14 @@ body.details
         height 2rem
         line-height 2rem
         min-height inherit
-        padding 0
+        padding 0 0.6rem 0 1rem
         text-transform uppercase
 
         i
           font-size inherit
           line-height 1.5rem
           margin 0
-          text-align right
-          width 8px
+          width 10px
 
   ul.collection
     border-radius 3px
@@ -170,12 +176,14 @@ body.details
       margin-bottom 1rem
 
   .container-fluid
-    top 4rem
     width 100%
     z-index 100
 
     &.pinned + .container
-      margin-top 2.5rem
+      margin-top 3rem
+
+    &.pin-top + .container
+      margin-top 0.5rem
 
   .labels
     margin-top 0.25rem
@@ -186,18 +194,17 @@ body.details
 
   .summary
     border-bottom-width thin
-    padding 1rem 0 0.5rem 0
+    margin-top 0.5rem
+    padding 0.5rem 0 0
 
     .s4
       padding 0
 
     .s8
-      // padding-left 0.5rem
-      padding-right 0
+      padding 0 1rem
 
   .toolbar
-    border-bottom-style solid
-    border-bottom-width thin
+    top -3rem
 
     .col
       padding 0

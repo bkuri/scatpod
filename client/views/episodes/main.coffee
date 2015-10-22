@@ -1,11 +1,14 @@
 Template.details.rendered = ->
   $deets = $('#details')
+  $toolbar = $('.container-fluid', '#details')
+
+  $toolbar.pushpin offset: $toolbar.offset().top, top: $toolbar.offset().top
+  $('.collapsible').collapsible()
 
   @autorun _.bind ->
     Deps.afterFlush ->
-      $('.collapsible').collapsible()
-      $toolbar = $('.container-fluid', '#details').css backgroundColor: document.body.style.backgroundColor
-      $toolbar.pushpin offset: $toolbar.offset().top, top: $toolbar.offset().top
+      document.body.scrollTop = 0
+      window.refreshListItems()
 
   , this
 

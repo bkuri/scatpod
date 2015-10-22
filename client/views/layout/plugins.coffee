@@ -1,3 +1,10 @@
+$.fn.colorize = (color) ->
+  $(@)
+    .removeClass 'negative positive'
+    .addClass (window.getThemeClass color)
+    .css backgroundColor: color
+
+
 $.fn.fillWith = (text, isInput=no) ->
   $me = $(@)
 
@@ -5,8 +12,8 @@ $.fn.fillWith = (text, isInput=no) ->
   s = 1
 
   iid = setInterval ->
-    if s < text.length then s++
-    else clearInterval iid
+    if (s < text.length) then s++
+    else (clearInterval iid)
 
     if isInput then ($me.val text.substr 0, s)
     else ($me.text text.substr 0, s)
@@ -50,11 +57,3 @@ $.fn.splitColors = (color, offset=30) ->
     chroma.set 'hsl.h', (hue + (180 - offset)) % 360
     chroma.set 'hsl.h', (hue + (180 + offset)) % 360
   ]
-
-
-$.fn.theme = (color1, color2) ->
-  $(@)
-    #.find('.label:not(.red)').css(backgroundColor: color2).end()
-    .find('.queue').css(borderColor: "transparent #{color2} transparent transparent").end()
-    # .find('.mdi-content-add').css color: color1
-    .end()

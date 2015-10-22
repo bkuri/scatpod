@@ -11,10 +11,10 @@ Template.results.events
 
 
   'click span.tools > a.play': (event) ->
-    $a = $(event.target).parent()
+    $a = $(event.currentTarget)
     item = _.sample (($a.parents '.card').data 'meta').item
     date = (moment item.pubDate).format 'MMM Do, YYYY'
-    track = new buzz.sound item.enclosure.$.url
+    track = (new buzz.sound item.enclosure.$.url)
 
     $a.addClass 'disabled playing'
     sound.stop() for sound in buzz.sounds
@@ -49,7 +49,11 @@ Template.results.events
     Meteor.call 'podcastAdd', data, (error, response) ->
       return if error?
       Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
-      Materialize.toast 'Subscribed to podcast', 1000
+
+      Meteor.setTimeout ->
+        window.refreshListItems()
+        Materialize.toast 'Subscribed to podcast', 1000
+      , 500
 
 
   'click a.detach': (event, template) ->
@@ -67,8 +71,9 @@ Template.results.events
 
       Meteor.setTimeout ->
         # $('a.join.disabled', $p).removeClass 'disabled'
+        window.refreshListItems()
         Materialize.toast 'Unsubscribed from podcast', 1000
-      , 100
+      , 500
 
 
   'click ul.collection a.primary-content': (event, template) ->
@@ -77,19 +82,22 @@ Template.results.events
     img = (event.currentTarget.querySelector 'img.thumb')
     url = (encodeURIComponent data.url)
 
-    event.preventDefault()
-    window.setTheme (new ColorThief().getPalette img, 3, 1)
-
     $col.onlyVisible().velocity
       o:
-        complete: -> (Router.go 'details', {url})
-        duration: 1000
-        stagger: 150
+        complete: ->
+          Router.go 'details', {url}
+
+        duration: 800
+        stagger: 100
 
       p: 'transition.fadeOut'
 
+    window.setTheme (new ColorThief().getPalette img, 2, 10)
+    window.refreshColors()
     ($col.onlyVisible yes).css opacity: 0
     Session.set 'podcast', (_.omit data, 'url', 'velocity')
+    Session.set 'scrollTop', document.body.scrollTop
+    event.preventDefault()
 
 
   'click .activator': (event) ->

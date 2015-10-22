@@ -4,6 +4,7 @@ Template.results.created = ->
 
 
 Template.results.rendered = ->
+  $col = $('ul.collection', '#results')
   $fab = $('#fab')
   $results = $('.row').first()
   $win = $(window)
@@ -12,9 +13,8 @@ Template.results.rendered = ->
 
   @autorun _.bind ->
     Deps.afterFlush ->
-      # $('body').bokeh()
-
       Session.set 'tracking', (_.pluck Meteor.user()?.profile.podcasts, '_id')
+      window.refreshTheme()
 
       # remove invalid images
       $('img', '.masonry-container')
@@ -36,9 +36,8 @@ Template.results.rendered = ->
         return unless (bottom <= threshold)
 
         tmp.limit.set (tmp.limit.get() + 40)
-
         clearTimeout tid?
-        tid = Meteor.setTimeout -> $('.new', 'ul.collection').process()
+        tid = Meteor.setTimeout -> $col.find('li.new').process()
 
       , 300, leading: no
 

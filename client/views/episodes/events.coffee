@@ -5,14 +5,17 @@ Template.details.events
 
 
   'click a.btn-back': ->
-    Meteor.setTimeout ->
-      $('#details').velocity 'transition.fadeOut',
-        complete: -> history.back()
-        duration: 1000
-    , 500
+    $('.container-fluid').removeClass('pinned')
+
+    $('.toolbar .btn-flat, .summary, .blurb, ul.collection li', '#details')
+      .onlyVisible yes
+      .css opacity: 0
+      .end()
+      .onlyVisible()
+      .velocity 'transition.justFadeOut', duration: 400, stagger: 100, complete: -> window.history.back()
 
 
-  'click a.btn-leave': (event) ->
+  'click a.btn-leave': _.throttle (event) ->
     {cid} = (Session.get 'podcast')
 
     unless cid in (Session.get 'tracking')
@@ -23,13 +26,15 @@ Template.details.events
       $(event.currentTarget).removeClass 'disabled'
       return if error?
 
+      Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+
       Meteor.setTimeout ->
-        Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+        window.refreshListItems()
         Materialize.toast 'Unsubscribed from podcast', 1000
-      , 300
+  , 2000
 
 
-  'click a.btn-join': (event) ->
+  'click a.btn-join': _.throttle (event) ->
     data = (Session.get 'podcast')
     meta = (Details.findOne Router.current().params.url)
     meta = (_.omit meta, ['description', 'info', 'link', 'owner'])
@@ -39,10 +44,12 @@ Template.details.events
       $(event.currentTarget).removeClass 'disabled'
       return if error?
 
+      Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+
       Meteor.setTimeout ->
-        Session.set 'tracking', (_.pluck Meteor.user().profile.podcasts, '_id')
+        window.refreshListItems()
         Materialize.toast 'Subscribed to podcast', 1000
-      , 300
+  , 2000
 
 
 Template.episodeList.events

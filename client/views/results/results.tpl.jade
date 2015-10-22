@@ -5,17 +5,17 @@ if smallScreen
         .col.l10.m12.s12.offset-l1
           ul.collection
             each results
-              li.new.collection-item-avatar.white-text(
+              li.new.collection-item-avatar(
                 data-cat=genres
                 data-cid=collectionId
                 data-img=artworkUrl600
                 data-url=feedUrl
               )
-                a.white-text.primary-content.waves-effect.waves-red.waves-light(href='#')
+                a.primary-content.waves-effect.waves-contrast(href='#')
                   if isTracking collectionId
-                    a.disabled.white-text.secondary-content.detach(href='#'): i.small.white-text.mdi-content-remove-circle
+                    a.disabled.secondary-content.detach(href='#'): i.small.mdi-content-remove-circle
                   else
-                    a.disabled.white-text.secondary-content.attach(href='#'): i.small.white-text.mdi-content-add-circle
+                    a.disabled.secondary-content.attach(href='#'): i.small.mdi-content-add-circle
                   //- .thumb(style="background: url(#{artworkUrl60}) no-repeat center hsl(200,50%,50%)")
                   img.thumb(crossorigin='' src=artworkUrl60)
                   p
@@ -25,7 +25,7 @@ if smallScreen
                     if isExplicit collectionExplicitness
                       span.label.red.white-text explicit
                     each labelize genres
-                      span.label.white.black-text= this
+                      span.label= this
 
 else
   +episodesModal

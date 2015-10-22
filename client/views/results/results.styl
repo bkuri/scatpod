@@ -1,3 +1,31 @@
+@import '../colors'
+
+body.search
+  &.negative
+    section
+      a, h6, i, strong, span
+        color $faded-white
+
+      span.label:not(.red)
+        background-color $faded-white
+        color $faded-black
+
+      .waves-effect.waves-contrast .waves-ripple
+        background-color $faded-white
+
+  &.positive
+    section
+      a, h6, i, strong, span
+        color $faded-black
+
+      span.label:not(.red)
+        background-color $faded-black
+        color $faded-white
+
+      .waves-effect.waves-contrast .waves-ripple
+        background-color $faded-black
+
+
 #results
   // mobile devices (single column)
   @media screen and (max-width: 600px)

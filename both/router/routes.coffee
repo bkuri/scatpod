@@ -4,7 +4,13 @@ Router.route 'home',
   onBeforeAction: ->
     $('.button-collapse', 'nav').sideNav 'hide'
     $('span.term', '#send').css fontStyle: 'normal'
+
+    window.refreshTheme(10)
     @next()
+
+  onAfterAction: ->
+    # document.body.scrollTop = (Session.get 'scrollTop')
+    console.log (Session.get 'scrollTop')
 
 
 Router.route 'details',
@@ -12,19 +18,18 @@ Router.route 'details',
   path: '/details/:url',
   waitOn: -> (Meteor.subscribe 'details', @params.url)
 
-  onAfterAction: _.throttle ->
-    $li = $('li', 'ul.collection')
-
-    $li.onlyVisible().velocity 'transition.slideRightIn',
-      complete: -> ($li.css opacity: 1)
-      duration: 1000
-      stagger: 150
-
-  , 2000, leading: no
-
   onBeforeAction: ->
+    [backgroundColor, baseColor, toolColor] = window.getThemeColors()
+
     Meteor.setTimeout ->
-      $('#details').velocity 'transition.fadeIn', duration: 1000
+      $('li', '#details ul.collection')
+        .addClass (window.getThemeClass backgroundColor)
+        .css {backgroundColor}
+
+      $('.summary', '#details').css backgroundColor: toolColor
+      $('a.queue, a.queued', '#details').css borderRightColor: toolColor
+      $('.collapsible-header, .summary .col, .toolbar a', '#details').colorize toolColor
+      window.refreshColors()
 
     @next()
 

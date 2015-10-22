@@ -1,9 +1,9 @@
 .navbar-fixed
-  nav.secondary-color(role='navigation')
+  nav.color-1(role='navigation')
     .nav-wrapper
       form#search.hide
         .input-field
-          input.white-text.red.darken-4(autofocus type='search')
+          input.color-1(autofocus type='search')
 
       ul.right.hide-on-med-and-down
         li: a.modal-trigger(href='#modal-add'): i.mdi-content-add
@@ -23,27 +23,27 @@
           li.divider
           li: a(href='#!') Logout
 
-      ul#mobile-nav.side-nav
-        li: a(href='#{pathFor route="home"}')
+      ul#mobile-nav.side-nav.color-2
+        li.color-2: a(href='#{pathFor route="home"}')
           i.mdi-action-home.left
           | Home
 
-        li: a.modal-trigger(href='#modal-add')
+        li.color-2: a.modal-trigger(href='#modal-add')
           i.mdi-content-add.left
           | Add more podcasts
 
-        li: a(href='#{pathFor route="settings"}')
+        li.color-2: a(href='#{pathFor route="settings"}')
           i.mdi-action-settings.left
           | Settings
 
-        li: a(href='#')
+        li.color-2: a(href='#')
           i.mdi-action-help.left
           | Help
 
         if recognized
           li: .divider
 
-          li: a.modal-trigger(href='#modal-exit')
+          li.color-2: a.modal-trigger(href='#modal-exit')
             i.mdi-action-exit-to-app.left
             | Log out
 
