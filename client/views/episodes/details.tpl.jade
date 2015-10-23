@@ -2,31 +2,31 @@ section#details
   .container-fluid
     .row.toolbar
       .col.s4
-        a.btn-flat.waves-effect.waves-contrast.btn-back(href='#')
+        a.btn-flat.waves-effect.waves-contrast.btn-back.color-2(href='#')
           span
             i.mdi-navigation-arrow-back
             | Back
 
       .col.s4
-        a.btn-flat.waves-effect.waves-contrast.btn-play(href='#')
+        a.btn-flat.waves-effect.waves-contrast.btn-play.color-2(href='#')
           span
             i.mdi-av-shuffle
             | Sample
 
       .col.s4
         if isTracking cid
-          a.btn-flat.waves-effect.waves-contrast.btn-leave(href='#')
+          a.btn-flat.waves-effect.waves-contrast.btn-leave.color-2(href='#')
             span.right
               i.mdi-content-remove
               | Remove
         else
-          a.btn-flat.waves-effect.waves-contrast.btn-join(href='#')
+          a.btn-flat.waves-effect.waves-contrast.btn-join.color-2(href='#')
             span.right
               i.mdi-content-add
               | Add
 
   .container
-    .row.summary
+    .row.summary.color-2
       .col.s4
         img#thumb(crossorigin='' src=img)
 
@@ -41,7 +41,7 @@ section#details
 
     .row.blurb
       .col.s12
-        ul.collapsible(data-collapsible='accordion')
+        ul.collapsible.color-2(data-collapsible='accordion')
           each accordionElements
             li
               .collapsible-header.waves-effect.waves-contrast

@@ -14,7 +14,7 @@ Template.results.rendered = ->
   @autorun _.bind ->
     Deps.afterFlush ->
       Session.set 'tracking', (_.pluck Meteor.user()?.profile.podcasts, '_id')
-      window.refreshTheme()
+      # window.refreshTheme()
 
       # remove invalid images
       $('img', '.masonry-container')

@@ -5,14 +5,19 @@ Template.details.events
 
 
   'click a.btn-back': ->
-    $('.container-fluid').removeClass('pinned')
+    $('.container-fluid').removeClass 'pinned'
 
     $('.toolbar .btn-flat, .summary, .blurb, ul.collection li', '#details')
       .onlyVisible yes
       .css opacity: 0
       .end()
       .onlyVisible()
-      .velocity 'transition.justFadeOut', duration: 400, stagger: 100, complete: -> window.history.back()
+      .velocity 'transition.justFadeOut',
+        duration: 400
+        stagger: 100
+        complete: ->
+          history.back()
+          return false
 
 
   'click a.btn-leave': _.throttle (event) ->
@@ -30,6 +35,7 @@ Template.details.events
 
       Meteor.setTimeout ->
         window.refreshListItems()
+        window.refreshColors()
         Materialize.toast 'Unsubscribed from podcast', 1000
   , 2000
 
@@ -48,8 +54,23 @@ Template.details.events
 
       Meteor.setTimeout ->
         window.refreshListItems()
+        window.refreshColors()
         Materialize.toast 'Subscribed to podcast', 1000
+
   , 2000
+
+
+  'click img#thumb': (event, template) ->
+    level = template.level.get()
+    console.log level
+
+    level = switch
+      when (level < 10) then (level + 1)
+      else 1
+
+    window.setTheme (new ColorThief().getPalette event.currentTarget, 2, level)
+    window.refreshColors()
+    template.level.set level
 
 
 Template.episodeList.events

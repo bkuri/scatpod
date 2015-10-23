@@ -35,7 +35,7 @@ Template.results.events
         $a.removeClass 'disabled playing'
 
 
-  'click a.attach': (event, template) ->
+  'click a.attach': (event) ->
     $a = $(event.currentTarget)
     data = ($a.parents '.card').data()
 
@@ -56,7 +56,7 @@ Template.results.events
       , 500
 
 
-  'click a.detach': (event, template) ->
+  'click a.detach': (event) ->
     $a = $(event.currentTarget)
     id = ($a.parents '.card').data 'id'
 
@@ -76,7 +76,7 @@ Template.results.events
       , 500
 
 
-  'click ul.collection a.primary-content': (event, template) ->
+  'click ul.collection a.primary-content': (event) ->
     $col = $('li', 'ul.collection')
     data = $(event.currentTarget).parent().data()
     img = (event.currentTarget.querySelector 'img.thumb')
@@ -92,11 +92,10 @@ Template.results.events
 
       p: 'transition.fadeOut'
 
-    window.setTheme (new ColorThief().getPalette img, 2, 10)
+    window.setTheme (new ColorThief().getPalette img, 2, 9)
     window.refreshColors()
     ($col.onlyVisible yes).css opacity: 0
     Session.set 'podcast', (_.omit data, 'url', 'velocity')
-    Session.set 'scrollTop', document.body.scrollTop
     event.preventDefault()
 
 
@@ -136,9 +135,9 @@ Template.results.events
     $(event.currentTarget).find('.card-title').click()
   ###
 
-  'mouseenter .hoverable': (event, template) ->
+  'mouseenter .hoverable': (event) ->
     $(event.currentTarget).find('.card-image > img').addClass 'hovering'
 
 
-  'mouseleave .hoverable': (event, template) ->
+  'mouseleave .hoverable': (event) ->
     $(event.currentTarget).find('.card-image > img').removeClass 'hovering'

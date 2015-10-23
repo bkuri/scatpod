@@ -1,10 +1,10 @@
+# TODO Add allow/deny rules
 @Details = new Mongo.Collection('details')
 @Search = new Mongo.Collection('search')
 
 
-Session.setDefault 'colors', [[134, 50, 51], [234, 234, 234], [13, 24, 16]]
+Session.setDefault 'colors', ['rgb(134, 50, 51)', 'rgb(234, 234, 234)', 'rgb(13, 24, 16)']
 Session.setDefault 'podcast', {}
-Session.setDefault 'scrollTop', 0
 Session.setDefault 'theme', 'negative'
 Session.setDefault 'tracking', []
 
@@ -30,27 +30,22 @@ window.getThemeClass = (c) ->
 
 
 window.getThemeColors = ->
-  [
-    (chroma Session.get('colors')[2])
-    (chroma Session.get('colors')[0])
-    (chroma Session.get('colors')[1])
-  ]
+  colors = []
+  (colors.push chroma color) for color in (Session.get 'colors')
+  # console.log colors
+  return colors
 
 
 window.refreshColors = ->
-  [backgroundColor, baseColor, toolColor] = window.getThemeColors()
-  # contrast = (chroma.contrast toolColor, backgroundColor)
+  [baseColor, toolColor, backgroundColor] = window.getThemeColors()
 
+  paint = (index, backgroundColor) ->
+    $(".color-#{index + 1}")
+      .css {backgroundColor}
+      .colorize backgroundColor
+
+  (paint i, color) for color, i in [backgroundColor, toolColor, baseColor]
   document.body.style.backgroundColor = baseColor
-  $('a', '#fab').colorize toolColor
-
-  $('.color-1, .divider')
-    .css {backgroundColor}
-    .colorize backgroundColor
-
-  $('.color-2')
-    .css backgroundColor: toolColor
-    .colorize toolColor
 
 
 window.refreshListItems = ->
@@ -67,28 +62,28 @@ window.refreshListItems = ->
 window.refreshTheme = (index=3) ->
   img = $('li', 'ul.collection').onlyVisible().find('img')[index]
   return unless img?
-  window.setTheme new ColorThief().getPalette(img), 2, 10
+  window.setTheme (new ColorThief().getPalette img, 2, 9)
   window.refreshColors()
 
 
 window.setTheme = (colors) ->
+  return unless colors?
   Session.set 'colors', colors
   Session.set 'theme', (window.getThemeClass chroma colors[0])
 
 
-window.toTheTop = (duration, callback={}) ->
+window.toTheTop = (complete={}) ->
   $('html').velocity 'scroll',
-    _.extend callback,
-    duration: duration or ($(window).scrollTop() / 3)
+    _.extend {complete},
+    duration: $(window).scrollTop() / 3
     easing: 'ease-out'
     mobileHA: no
 
 
-$.Velocity.defaults = (_.extend $.Velocity.defaults, duration: 500)
-
 $.Velocity
   .RegisterEffect 'transition.justFadeIn', defaultDuration: 800, calls: [[opacity: 1]]
   .RegisterEffect 'transition.justFadeOut', defaultDuration: 800, calls: [[opacity: 0]]
+  .defaults = (_.extend $.Velocity.defaults, duration: 500)
 
 ###
 Meteor.startup ->

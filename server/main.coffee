@@ -58,4 +58,4 @@ Meteor.publish 'userData', ->
       'profile': 1
 
 
-SSR.compileTemplate 'welcome', (Assets.getText 'templates/welcome.html')
+# SSR.compileTemplate 'welcome', (Assets.getText 'templates/welcome.html')

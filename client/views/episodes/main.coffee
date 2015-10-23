@@ -1,3 +1,7 @@
+Template.details.created = ->
+  @level = new ReactiveVar 1
+
+
 Template.details.rendered = ->
   $deets = $('#details')
   $toolbar = $('.container-fluid', '#details')
@@ -7,9 +11,8 @@ Template.details.rendered = ->
 
   @autorun _.bind ->
     Deps.afterFlush ->
-      document.body.scrollTop = 0
-      window.refreshListItems()
-
+      window.toTheTop ->
+        window.refreshListItems()
   , this
 
 
